@@ -1,4 +1,4 @@
-#show move/3.
+% #show move/3.
 % #show assumption/1.
 % #show possibleMove/3.
 % #show maxStep/1.

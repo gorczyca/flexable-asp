@@ -306,3 +306,4 @@ gameOver(T) :- opponentWon(T).
 
 % debugging
 % :-maxStep(T), T!=maxMove.
+#show move/3.
