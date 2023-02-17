@@ -94,7 +94,7 @@ possibleMove(0, "PB1", RId) :- remainingUnblockedRule(0, RId, "P"), head(RId, H)
 
 % PF1
 notPossibleForwardRule(0, RId, "P") :- remainingUnblockedRule(0, RId, "P"), body(RId, B), incompleteStatement(0, B, "P").
-possibleForwardRule(0, RId, "P") :- remainingUnblockedRule(0, RId, "P"), not notPossibleForwardRule(t, RId, "P"). 
+possibleForwardRule(0, RId, "P") :- remainingUnblockedRule(0, RId, "P"), not notPossibleForwardRule(0, RId, "P"). 
 possibleForwardRule(0, RId, "P") :- remainingUnblockedRule(0, RId, "P"), emptyBodyRule(RId).
 possibleMove(0, "PF1", RId) :- possibleForwardRule(0, RId, "P").
 
