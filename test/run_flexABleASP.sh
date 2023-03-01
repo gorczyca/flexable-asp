@@ -14,20 +14,20 @@
 # ./run_flexABleASP.sh -i exp_acyclic_depvary_step10_batch_yyy01.pl w2 15
 
 # TODO: set the paths here
-FLEXABLEASP_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp"
-INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
-CLINGO_DIR="/home/piotr/anaconda3/envs/potassco/bin/clingo"
+FLEXABLEASP_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/flexable-asp"
+INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/instances"
+CLINGO_DIR="/home/pigo271b/.conda/envs/flexASP/bin/clingo"
 # ----
 
 enum=0
 
-ENCODING=${FLEXABLEASP_DIR}/repo/encoding.lp
+ENCODING=${FLEXABLEASP_DIR}/encoding.lp
 
 while getopts ie opt; do
   case ${opt} in
     i )
       # use the incremental version
-      ENCODING=${FLEXABLEASP_DIR}/repo/incremental/encodingInc.lp
+      ENCODING=${FLEXABLEASP_DIR}/incremental/encodingInc.lp
       ;;
     e )
       # echo "I should enum"
