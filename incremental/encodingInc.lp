@@ -1,5 +1,9 @@
 #include <incmode>.
 #const goal=g.
+#const maxMove = 1.
+
+% - this is some built-in constant to control max number of steps - set it to maxMove (so the name is the same as in the non-incremental version)
+#const imax = maxMove.  
 
 #program base.
 goal(goal).
@@ -139,7 +143,9 @@ propCanMoveTermination(0) :- possibleMove(0, "PF2", _).
 
 proponentWon(0) :- taCondition(0), not oppCanMoveTermination(0).
 opponentWon(0) :- not taCondition(0), not propCanMoveTermination(0).
- 
+
+% gameOver(0) :- proponentWon(0).
+% gameOver(0) :- opponentWon(0).
 
 
 % ------------------------------------------------
@@ -405,8 +411,15 @@ propCanMoveTermination(t) :- possibleMove(t, "PF2", _).
 proponentWon(t) :- taCondition(t), not oppCanMoveTermination(t).
 opponentWon(t) :- not taCondition(t), not propCanMoveTermination(t).
  
+% gameOver(t) :- proponentWon(t).
+% gameOver(t) :- opponentWon(t).
+
 
 #program check(t).
+% :- query(t), not gameOver(t).
+% :- query(t), opponentWon(t).
+
 :- query(t), not proponentWon(t).
+% :- query(t), gameOver(t-1).
 
 #show move/3.

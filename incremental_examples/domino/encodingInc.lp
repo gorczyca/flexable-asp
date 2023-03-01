@@ -1,6 +1,10 @@
 #include <incmode>.
 
 
+% #const istop  = "SAT". % Stop when there is a model
+% #const imin   = 1.     % Start with maxstep=1
+#const imax   = 11.   % Max maxstep you would consider
+
 #program base.
 player("P1";"P2").
 
@@ -24,6 +28,7 @@ possibleMove(0, Id) :- state(0,_,X), remainingPiece(0, Id), piece(Id, _, X).
 % display
 pPlayedPiece(0, Id, L, R) :- playedPiece(0, _, Id), piece(Id, l, L), piece(Id, r, R).
 pState(0,L,R) :- state(0, l, L), state(0, r, R).  % to display nicely
+
 
 #program step(t).
 { playedPiece(t, P, Id) : possibleMove(t-1, Id), turn(t-1, P) } = 1.
