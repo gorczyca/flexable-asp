@@ -14,14 +14,15 @@ def get_cmd_args():
     parser = argparse.ArgumentParser(description='Python script to check the flexABle ASP implementation agains the results from ASPFORABA')
 
     parser.add_argument('-i', '--incremental', action='store_true', help='Use this to select the incremental (incmode) version.')
+    parser.add_argument('-l', '--local', action='store_true', help='Use this when running locally.')
     parser.add_argument('timeout', help='Maximal number of seconds per instance.')
     parser.add_argument('max_moves', help='Maximal number moves (steps, turns) of a dispute.')
 
     return parser.parse_args()
 
 
-def get_asp_output(file, query, timeout, max_moves, use_inc):
-    command = f'bash {BASH_SCRIPT_PATH} {"-i" if use_inc else ""} {file} {query} {max_moves}'
+def get_asp_output(file, query, timeout, max_moves, use_inc, local):
+    command = f'bash {BASH_SCRIPT_PATH} {"-i" if use_inc else ""} {"-l" if local else ""} {file} {query} {max_moves}'
     try:
         output = subprocess.check_output(args=[command],shell=True, stderr=subprocess.STDOUT, timeout=timeout)
         split = output.decode().split()
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 
     args = get_cmd_args()
 
-    timeout, max_moves, use_inc = int(args.timeout), args.max_moves, args.incremental
+    timeout, max_moves, use_inc, local = int(args.timeout), args.max_moves, args.incremental, args.local
 
     output_path = f'{"inc" if use_inc else "def"}_{max_moves}_{timeout}.csv'
 
@@ -60,7 +61,7 @@ if __name__ == '__main__':
                 bar()
                 continue
 
-            flex_asp_result, flex_asp_duration = get_asp_output(row.instance, row.goal, timeout, max_moves, use_inc)
+            flex_asp_result, flex_asp_duration = get_asp_output(row.instance, row.goal, timeout, max_moves, use_inc, local)
 
             if flex_asp_result is None:
                 verdict = 'TIMEOUT'    
