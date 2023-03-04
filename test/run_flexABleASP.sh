@@ -3,6 +3,7 @@
 # optional flags
 #  -i use the incremental mode (by default just use the normal version)
 #  -e enumerate defences (by default just show satisfiability)
+#  -l when running locally
 
 # $1 = instance
 # $2 = goal
@@ -20,28 +21,42 @@ CLINGO_DIR="/home/pigo271b/.conda/envs/flexASP/bin/clingo"
 # ----
 
 enum=0
+use_inc=0
+verbatim=0
 
 ENCODING=${FLEXABLEASP_DIR}/encoding.lp
 
-while getopts ie opt; do
+while getopts ielv opt; do
   case ${opt} in
     i )
       # use the incremental version
-      ENCODING=${FLEXABLEASP_DIR}/incremental/encodingInc.lp
+      use_inc=1
       ;;
     e )
       # echo "I should enum"
       enum=1
       ;;
+    l )
+      # overwrite the locations when used with the "home" flag, when script is run locally and not on the hpc cluster
+      FLEXABLEASP_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo"
+      INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
+      CLINGO_DIR="/home/piotr/anaconda3/envs/potassco/bin/clingo"
+      ;;
+    v ) 
+      verbatim=1
+      ;;
   esac
 done
 shift $((OPTIND -1))
 
+if [[ $use_inc -eq 1 ]]; then
+  # ENCODING=${FLEXABLEASP_DIR}/incremental/encodingInc.lp
+  ENCODING=${FLEXABLEASP_DIR}/incremental/encodingIncConstraint.lp
+fi
 
-
-
-if [[ $enum -eq 0 ]] 
-then
+if [[ $verbatim -eq 1 ]]; then
+  ${CLINGO_DIR} $ENCODING ${INSTANCES_DIR}/$1 1 --const goal=$2 --const maxMove=$3
+elif [[ $enum -eq 0 ]]; then
   # get info: SAT or not
   ${CLINGO_DIR} $ENCODING ${INSTANCES_DIR}/$1 1 --const goal=$2 --const maxMove=$3 --quiet=3  | grep 'SATISFIABLE\|CPU Time'
 else
