@@ -1,7 +1,7 @@
 import clingo
 
 
-PROGRAMS = ['multi_shot_examples/tohE.lp', 'multi_shot_examples/tohI.lp']
+PROGRAMS = ['multi_shot_examples/toh/tohE.lp', 'multi_shot_examples/toh/tohI.lp']
 
 
 def get(val, default):
@@ -18,9 +18,6 @@ if __name__ == '__main__':
     imin = get(ctrl.get_const("imin"), 1)
     imax = ctrl.get_const("imax")
     istop = get(ctrl.get_const("istop"), "SAT")
-
-    str_symb = clingo.Symbol('x')
-    int_symb = clingo.Symbol(1)
     
     step, ret = 0, None
     while (
@@ -28,14 +25,15 @@ if __name__ == '__main__':
             (istop == 'SAT' and not ret.satisfiable) or 
             (istop == "UNSAT" and not ret.unsatisfiable) or 
             (istop == "UNKNOWN" and not ret.unknown))):
+        print(f'step: {step}')
         parts = []
-        parts.append(("check", [clingo.Symbol(step)]))
+        parts.append(("check", [clingo.symbol.Number(step)]))
         if step > 0:
-            ctrl.release_external(clingo.Function("query", [clingo.Symbol(step-1)]))
-            parts.append(("step", [clingo.Symbol(step)]))
+            ctrl.release_external(clingo.Function("query", [clingo.symbol.Number(step-1)]))
+            parts.append(("step", [clingo.symbol.Number(step)]))
             ctrl.cleanup()
         else:
             parts.append(("base", []))
         ctrl.ground(parts)
-        ctrl.assign_external(clingo.Function("query", [clingo.Symbol(step)]), True)
+        ctrl.assign_external(clingo.Function("query", [clingo.symbol.Number(step)]), True)
         ret, step = ctrl.solve(), step+1

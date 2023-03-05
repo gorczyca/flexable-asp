@@ -15,9 +15,9 @@ blocked(D-1,P,t) :- blocked(D,P,t), disk(D).
 :- disk(D), not 1 { on(D,P,t) } 1.
 
 #program check(t).
+#external query(t).
 :- goal_on(D,P), not on(D,P,t), query(t).
 
-#external query(t).
 
 #show move/3.
 
