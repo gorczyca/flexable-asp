@@ -1,0 +1,9 @@
+instance,goal,result,duration,correct_result,verdict
+exp_acyclic_depvary_step10_batch_yyy01.pl,w2,yes,0.03,yes,corr
+exp_acyclic_depvary_step10_batch_yyy01.pl,w5,yes,0.02,yes,corr
+exp_acyclic_depvary_step10_batch_yyy01.pl,q4,,5.0,no,TIMEOUT
+exp_acyclic_depvary_step10_batch_yyy01.pl,x5,yes,0.09,yes,corr
+exp_acyclic_depvary_step10_batch_yyy01.pl,z3,,5.0,yes,TIMEOUT
+exp_acyclic_depvary_step10_batch_yyy01.pl,u2,yes,0.03,yes,corr
+exp_acyclic_depvary_step10_batch_yyy01.pl,t4,yes,0.03,yes,corr
+exp_acyclic_depvary_step10_batch_yyy01.pl,c4,,5.0,no,TIMEOUT

@@ -8,13 +8,16 @@ from alive_progress import alive_bar
 from flexaspMS import get_flex_asp_answer
 
 
-ASPFORABA_RESULTS_PATH = './test/aspforaba_results.csv'
+# ASPFORABA_RESULTS_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/test/aspforaba_results.csv'
+ASPFORABA_RESULTS_PATH = '../aspforaba_results.csv'
+
+# OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/multi_shot/multi_shot_1.csv'
 OUTPUT_PATH = 'multi_shot_1.csv'
 
 INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
 #INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/instances"
 
-
+TIMEOUT = 600
 
 if __name__ == '__main__':
 
@@ -38,9 +41,12 @@ if __name__ == '__main__':
                 continue
 
             inst_path = f'{INSTANCES_DIR}/{row.instance}'
-            ms_result, ms_duration = get_flex_asp_answer(inst_path, row.goal)
+            ms_result, ms_duration = get_flex_asp_answer(inst_path, row.goal, TIMEOUT)
 
-            verdict = 'corr' if ms_result == row.adm_result else 'inc'
+            if ms_result is not None:
+                verdict = 'corr' if ms_result == row.adm_result else 'inc'
+            else: 
+                verdict = 'TIMEOUT'
 
             row_to_append = pd.DataFrame({
                 'instance': [row.instance],
@@ -55,5 +61,3 @@ if __name__ == '__main__':
             outputs_df = pd.concat([outputs_df, row_to_append], ignore_index=True)
             outputs_df.to_csv(OUTPUT_PATH, index=False)
             bar()
-
-

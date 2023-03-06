@@ -32,10 +32,33 @@ remainingRuleBlocked(0, RId, "P") :- body(RId, B1), body(RId,B2), contrary(B1,B2
 
 #program updateState(t).
 % TODO: here first explicitly rewrite everything monotonic from the previous steps
+stateRule(t, RId, P) :- stateRule(t-1, RId, P).
+stateStatement(t, S, P) :- stateStatement(t-1, S, P).
+
+completeStateStatement(t, S, P) :- completeStateStatement(t-1, S, P).
+completeStateRule(t, RId, P) :- completeStateRule(t-1, RId, P).
+
+defence(t, D) :- defence(t-1, D).
+defenceContrary(t, C) :- defenceContrary(t-1, C).
+culprit(t, C) :- culprit(t-1, C).
+culpritContrary(t, Ctr) :- culpritContrary(t-1, Ctr).
+
+ruleHead(t, H, P) :- ruleHead(t-1, H, P).
+
+stateFullyExpandedStatement(t, S, "O") :- stateFullyExpandedStatement(t-1, S, "O").
+
+playedBlockedStatement(t, S, "O") :- playedBlockedStatement(t-1, S, "O").
+playedBlockedRule(t, RId, "O") :- playedBlockedRule(t-1, RId, "O").
+stateFullyExpandedStatementNotAssumption(t, S, "O") :- stateFullyExpandedStatementNotAssumption(t-1, S, "O").
+
+
+move(t) :- move(t, _, _).
 
 % add everything from P to O
 stateStatement(t, S, "O") :- stateStatement(t, S, "P"). % copy safely
 stateRule(t, RId, "O") :- stateRule(t, RId, "P").  % copy safely
+
+dependency(t, H, B, P) :- dependency(t-1, H, B, P).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -179,8 +202,8 @@ culpritCandidate(t, C) :- assumption(C), unblockedStatementSupportingDefenceCont
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Propagate from the previous step
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-stateRule(t, RId, P) :- stateRule(t-1, RId, P).
-stateStatement(t, S, P) :- stateStatement(t-1, S, P).
+% stateRule(t, RId, P) :- stateRule(t-1, RId, P).
+% stateStatement(t, S, P) :- stateStatement(t-1, S, P).
 
 % add more things that you can safely copy
 
@@ -282,10 +305,27 @@ proponentWon(t) :- taCondition(t), not oppCanMoveTermination(t).
 opponentWon(t) :- not taCondition(t), not propCanMoveTermination(t).
 
 
+% just for easier presentation
 
-:- opponentWon(t). % this should be enough
-% if this satisfiable up to this point, continue; else return UNSAT
-% :- not proponentWon(t).
+moveAss(t, Type, A) :- move(t, Type, A), assMoveType(Type).
+moveRuleHead(t, Type, H) :- move(t, Type, RId), ruleMoveType(Type), head(RId, H).
+moveRuleBody(t, Type, B) :- move(t, Type, RId), ruleMoveType(Type), body(RId, B).
+
+% 
+remainingPropRule(t, H) :- remainingRule(t, RId, "P"), head(RId, H).
+propRuleHead(t, H) :- ruleHead(t, H, "P").
+
+pf1Possible(t) :- possibleMove(t, "PF1", _).
+pf1NotPossible(t) :- not pf1Possible(t).
+
+:- opponentWon(t).
+
+% #program checkGameOn(t).
+% #external gameOn(t).
+% :- not move(t), gameOn(t).
+% :- opponentWon(t), gameOn(t). % this should be enough
+% % if this satisfiable up to this point, continue; else return UNSAT
+% % :- not proponentWon(t).
 
 #program check(t).
 #external query(t).
@@ -294,7 +334,27 @@ opponentWon(t) :- not taCondition(t), not propCanMoveTermination(t).
 
 #program step(t).
 % choose 1 move
-{ move(t, Type, X) : possibleMove(t-1, Type, X),  advancementMoveType(Type) } = 1.
 
-#show move/3.
-#show possibleMove/3.
+% encofce using PF1 moves whenever possible
+
+{ move(t, Type, X) : possibleMove(t-1, Type, X),  advancementMoveType(Type)  } = 1 :- pf1NotPossible(t-1).
+{ move(t, "PF1", X) : possibleMove(t-1, "PF1", X) } = 1 :- pf1Possible(t-1).
+
+% #show possibleMove/3.
+
+% ------------- debugging errors
+% #show remainingRule/3.
+% #show remainingPropRule/2.
+% #show propRuleHead/2.
+
+% ------------- nice output
+#show moveAss/3.
+#show moveRuleHead/3.
+#show moveRuleBody/3.
+
+#show opponentWon/1.
+
+%
+% #show move/3.
+
+
