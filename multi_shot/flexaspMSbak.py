@@ -138,9 +138,16 @@ def get_flex_asp_answer(instance, goal, timeout):
         # ctrl.assign_external('gameOn', step)
         # res = ctrl.solve(on_model=lambda model: on_model(step, model))
         # with ctrl.solve(on_model=lambda model: on_model(step, model), async_=True) as handle:
-        print('solving 1')
-        res = ctrl.solve()
-        print('solved 1')
+        with ctrl.solve(async_=True) as handle:
+            print('solving 1')
+            while not handle.wait(1.0):
+                time_elapsed = time.time() - start_time
+                if time_elapsed > timeout:
+                    print('solving 1 timeout')
+                    handle.cancel()
+                    return None, timeout
+            print('solved 1')
+            res = handle.get()
 
         if res.satisfiable: # <- game is still satisfiable
             print('grounding check')
@@ -148,17 +155,17 @@ def get_flex_asp_answer(instance, goal, timeout):
             ctrl.assign_external('query', step)
             print('grounded check')
             # res = ctrl.solve(on_model=lambda model: on_model(step, model))
-            print('solving 2')
-            res = ctrl.solve()
+            # res = ctrl.solve()
 
-            # with ctrl.solve(async_=True) as handle2:
-                # while not handle2.wait(1.0):
-                    # time_elapsed = time.time() - start_time
-                    # if time_elapsed > timeout:
-                    #     print('solving 2 timeout')
-                    #     handle2.cancel()
-                        # return None, timeout
-            # res = handle2.get()
+            with ctrl.solve(async_=True) as handle2:
+                print('solving 2')
+                while not handle2.wait(1.0):
+                    time_elapsed = time.time() - start_time
+                    if time_elapsed > timeout:
+                        print('solving 2 timeout')
+                        handle2.cancel()
+                        return None, timeout
+            res = handle2.get()
 
             print('solved 2')
             if res.satisfiable:
