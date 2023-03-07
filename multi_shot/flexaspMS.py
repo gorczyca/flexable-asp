@@ -163,7 +163,7 @@ def get_flex_asp_answer(instance, goal, timeout):
             break
 
     total_time = time.time() - start_time
-    return return_value, round(total_time, 2)
+    return return_value, round(total_time, 2), step
 
 
 if __name__ == '__main__':

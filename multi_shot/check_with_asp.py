@@ -9,15 +9,16 @@ from flexaspMS import get_flex_asp_answer
 
 
 # ASPFORABA_RESULTS_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/test/aspforaba_results.csv'
-ASPFORABA_RESULTS_PATH = '../aspforaba_results.csv'
+ASPFORABA_RESULTS_PATH = '../test/aspforaba_results.csv'
 
 # OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/multi_shot/multi_shot_1.csv'
 OUTPUT_PATH = 'multi_shot_1.csv'
 
-INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
-#INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/instances"
+#INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
+INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/instances"
 
 TIMEOUT = 600
+#TIMEOUT = 50
 
 if __name__ == '__main__':
 
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         # check if a results file already exists
         outputs_df = pd.read_csv(OUTPUT_PATH)
     else:
-        outputs_df = pd.DataFrame(columns=['instance', 'goal', 'result', 'duration', 'correct_result', 'verdict'])
+        outputs_df = pd.DataFrame(columns=['instance', 'goal', 'result', 'duration', 'correct_result', 'verdict', 'steps_obtained'])
 
     total_size = len(corr_results_df)
     inc_count = 0
@@ -41,7 +42,7 @@ if __name__ == '__main__':
                 continue
 
             inst_path = f'{INSTANCES_DIR}/{row.instance}'
-            ms_result, ms_duration = get_flex_asp_answer(inst_path, row.goal, TIMEOUT)
+            ms_result, ms_duration, ms_steps = get_flex_asp_answer(inst_path, row.goal, TIMEOUT)
 
             if ms_result is not None:
                 verdict = 'corr' if ms_result == row.adm_result else 'inc'
@@ -54,7 +55,8 @@ if __name__ == '__main__':
                 'result': [ms_result],
                 'duration': [ms_duration],
                 'correct_result': [row.adm_result],
-                'verdict': [verdict]
+                'verdict': [verdict],
+		'steps_obtained': [ms_steps]
                              
             })
 
