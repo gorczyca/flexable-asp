@@ -1,3 +1,0 @@
-instance,goal,result,duration,correct_result,verdict,steps_obtained
-exp_acyclic_depvary_step10_batch_yyy01.pl,w2,yes,0.27,yes,corr,1
-exp_acyclic_depvary_step10_batch_yyy01.pl,w5,yes,0.06,yes,corr,1
