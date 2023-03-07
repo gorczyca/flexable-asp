@@ -148,7 +148,7 @@ def get_flex_asp_answer(instance, goal, timeout):
             ctrl.ground('check', step)
             ctrl.assign_external('query', step)
             # res = ctrl.solve(on_model=lambda model: on_model(step, model))
-            res = ctrl.solve()
+            # res = ctrl.solve()
 
             with ctrl.solve(async_=True) as handle:
                 while not handle.wait(1.0):
@@ -157,7 +157,7 @@ def get_flex_asp_answer(instance, goal, timeout):
                         handle.cancel()
                         return None, timeout
             res = handle.get()
-            
+
             if res.satisfiable:
                 return_value = 'yes'
                 break
