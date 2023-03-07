@@ -157,15 +157,15 @@ def get_flex_asp_answer(instance, goal, timeout):
             # res = ctrl.solve(on_model=lambda model: on_model(step, model))
             # res = ctrl.solve()
 
-            with ctrl.solve(async_=True) as handle:
+            with ctrl.solve(async_=True) as handle2:
                 print('solving 2')
-                while not handle.wait(1.0):
+                while not handle2.wait(1.0):
                     time_elapsed = time.time() - start_time
                     if time_elapsed > timeout:
                         print('solving 2 timeout')
-                        handle.cancel()
+                        handle2.cancel()
                         return None, timeout
-            res = handle.get()
+            res = handle2.get()
 
             print('solved 2')
             if res.satisfiable:
