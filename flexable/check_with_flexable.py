@@ -28,15 +28,23 @@ FLEXABLE_JAR = './flexable-assembly-1.0.jar'
 def get_flexable_answer(instance, goal):
     command = f'java -jar {FLEXABLE_JAR} {instance} -i apx -g {goal} -s'
     start_time = time.time()
+    result, steps = None, None
     try:
         output = subprocess.check_output(args=[command], shell=True, stderr=subprocess.STDOUT, timeout=TIMEOUT)
         time_needed = time.time() - start_time
         split = output.decode().split('\n')
-        print(split)
-        return 'yes', 5, 5
+        if split[1].startswith('Finished'):
+            result = 'yes'
+            step = int(split[-2].split(':')[0])
+        else:
+            result = 'no'
+
+        
+        print(f'{result} {round(time_needed, 2} {steps}')
+        return result, round(time_needed, 2), steps
 
     except subprocess.TimeoutExpired:
-        return None, float(TIMEOUT), 0
+        return None, float(TIMEOUT), None
 
 
 if __name__ == '__main__':
