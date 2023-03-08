@@ -40,7 +40,7 @@ def get_flexable_answer(instance, goal):
             result = 'no'
 
         
-        print(f'{result} {round(time_needed, 2} {steps}')
+        print(f'{result} {round(time_needed, 2)} {steps}')
         return result, round(time_needed, 2), steps
 
     except subprocess.TimeoutExpired:
