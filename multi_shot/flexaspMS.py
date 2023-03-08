@@ -135,44 +135,34 @@ def get_flex_asp_answer(instance, goal, timeout):
             while not handle.wait(1.0):
                 time_elapsed = time.time() - start_time
                 if time_elapsed > timeout:
-                    print('solving 1 timeout')
                     handle.cancel()
-                    return None, timeout
-            print('solved 1')
+                    return None, timeout, step
             res = handle.get()
 
             if res.satisfiable: # <- game is still satisfiable
-                print('grounding check')
                 ctrl.ground('check', step)
                 ctrl.assign_external('query', step)
-                print('grounded check')
                 # res = ctrl.solve(on_model=lambda model: on_model(step, model))
                 # res = ctrl.solve()
 
                 with ctrl.solve(async_=True) as handle2:
-                    print('solving 2')
                     while not handle2.wait(1.0):
                         time_elapsed = time.time() - start_time
                         if time_elapsed > timeout:
-                            print('solving 2 timeout')
                             handle2.cancel()
-                            return None, timeout
+                            return None, timeout, step
                         
                     res = handle2.get()
 
-                    print('solved 2')
                     if res.satisfiable:
                         return_value = 'yes'
                         break
                     else:             
                         ctrl.release_external('query', step)
                         ctrl.cleanup()
-                        print('cleaned-up')
 
                         step += 1
-                        print('grounding next step')
                         ctrl.ground('step', step)
-                        print('grounded next step')
             else:
                 return_value = 'no'
                 break
