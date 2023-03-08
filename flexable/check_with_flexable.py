@@ -17,7 +17,7 @@ ASPFORABA_RESULTS_PATH = '../test/aspforaba_results.csv'
 OUTPUT_PATH = 'flexable.csv'
 
 #INSTANCES_DIR="/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-tests/instances/aspforaba"
-INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/instances"
+INSTANCES_DIR="/scratch/ws/0/pigo271b-flexASP-workspace/flexABleASP/flexable_instances"
 
 TIMEOUT = 600
 #TIMEOUT = 50
