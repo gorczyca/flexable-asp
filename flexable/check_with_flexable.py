@@ -61,7 +61,7 @@ if __name__ == '__main__':
                 continue
 
             inst_path = f'{INSTANCES_DIR}/{row.instance}'
-            ms_result, ms_duration, ms_steps = get_flexable_answer(inst_path, row.goal, TIMEOUT)
+            ms_result, ms_duration, ms_steps = get_flexable_answer(inst_path, row.goal)
 
             if ms_result is not None:
                 verdict = 'corr' if ms_result == row.adm_result else 'inc'
