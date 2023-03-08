@@ -5,7 +5,7 @@ import argparse
 import pandas as pd
 from alive_progress import alive_bar
 
-from flexaspMSAlt import get_flex_asp_answer
+from flexaspMSAltStrat import get_flex_asp_answer
 
 
 # ASPFORABA_RESULTS_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/test/aspforaba_results.csv'
