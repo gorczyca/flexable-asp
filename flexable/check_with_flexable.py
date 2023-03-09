@@ -35,7 +35,10 @@ def get_flexable_answer(instance, goal):
         split = output.decode().split('\n')
         if split[1].startswith('Finished'):
             result = 'yes'
-            step = int(split[-2].split(':')[0])
+            try:
+                steps = int(split[-2].split(':')[0])
+            except:
+                pass
         else:
             result = 'no'
 
