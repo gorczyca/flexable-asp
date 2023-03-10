@@ -28,7 +28,7 @@ ENCODING = './encodingMultiShotAltStrat.lp'
 
 class CustomControl(clingo.Control):
     def __init__(self, *asp_files):
-        super().__init__()
+        super().__init__(['--warn=none'])
         for file in asp_files:
             super().load(file)
 
@@ -168,6 +168,7 @@ def get_flex_asp_answer(instance, goal, timeout):
                         ctrl.ground('step', step)   # perform the next move
                     else:       
                         return_value = 'no'    
+                        break
 
     total_time = time.time() - start_time
     return return_value, round(total_time, 2), step

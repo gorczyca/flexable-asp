@@ -28,7 +28,7 @@ ENCODING = './encodingMultiShotAlt.lp'
 
 class CustomControl(clingo.Control):
     def __init__(self, *asp_files):
-        super().__init__()
+        super().__init__(['--warn=none'])
         for file in asp_files:
             super().load(file)
 
@@ -130,6 +130,7 @@ def get_flex_asp_answer(instance, goal, timeout):
     res = None
 
     while True:
+        print(f'step {step}')
         ctrl.ground('updateState', step)
         ctrl.ground('checkPropWon', step)
         ctrl.assign_external('hasPropWon', step)
@@ -167,7 +168,8 @@ def get_flex_asp_answer(instance, goal, timeout):
                         step += 1
                         ctrl.ground('step', step)   # perform the next move
                     else:       
-                        return_value = 'no'    
+                        return_value = 'no' 
+                        break  
 
     total_time = time.time() - start_time
     return return_value, round(total_time, 2), step
@@ -175,7 +177,8 @@ def get_flex_asp_answer(instance, goal, timeout):
 
 if __name__ == '__main__':
     _, instance, goal = sys.argv
-    res, duration = get_flex_asp_answer(instance, goal)
+    res, duration, step = get_flex_asp_answer(instance, goal, 600)
+    print(f'{res} {duration} {step}')
     pass
     
 
