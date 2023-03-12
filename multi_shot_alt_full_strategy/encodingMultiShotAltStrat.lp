@@ -333,7 +333,7 @@ ob1Possible(t) :- possibleMove(t, "OB1", _), not pf1Possible(t), not pb2Possible
 
 #program checkGameOn(t).
 #external gameOn(t).
-:- opponentWon, gameOn(t).
+:- opponentWon(t), gameOn(t).
 
 
 

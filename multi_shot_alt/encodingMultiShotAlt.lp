@@ -326,7 +326,7 @@ pf1NotPossible(t) :- not pf1Possible(t).
 
 #program checkGameOn(t).
 #external gameOn(t).
-:- opponentWon, gameOn(t).
+:- opponentWon(t), gameOn(t).
 
 
 
