@@ -30,6 +30,7 @@ def get_flexable_answer(instance, goal):
     start_time = time.time()
     result, steps = None, None
     try:
+        print(command)
         output = subprocess.check_output(args=[command], shell=True, stderr=subprocess.STDOUT, timeout=TIMEOUT)
         time_needed = time.time() - start_time
         split = output.decode().split('\n')

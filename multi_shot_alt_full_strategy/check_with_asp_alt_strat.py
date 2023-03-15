@@ -42,6 +42,7 @@ if __name__ == '__main__':
                 continue
 
             inst_path = f'{INSTANCES_DIR}/{row.instance}'
+            print(f'{inst_path} {row.goal}')
             ms_result, ms_duration, ms_steps = get_flex_asp_answer(inst_path, row.goal, TIMEOUT)
 
             if ms_result is not None:
