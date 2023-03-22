@@ -1,3 +1,9 @@
 launch.json
 slurm*
 __pycache__
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.synctex.gz
+

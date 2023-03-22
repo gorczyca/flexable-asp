@@ -1,0 +1,59 @@
+% \documentclass[tikz,convert={outfile=\jobname.svg}]{standalone}
+\documentclass[tikz]{standalone}
+\usetikzlibrary{shapes.geometric, arrows}
+\begin{document}
+\begin{tikzpicture}[node distance=2cm,
+        % styles
+        startstop/.style = {
+                rectangle, rounded corners,
+                %minimum width=3cm, minimum height=1cm,
+                text centered, draw=black, fill=red!30
+            }, %
+        io/.style = {
+                trapezium, trapezium left angle=70, trapezium right angle=110,
+                %minimum width=3cm, minimum height=1cm, 
+                text centered, draw=black, fill=blue!20
+            },
+        decision/.style = {
+                diamond, aspect=3,
+                %minimum width=3cm, minimum height=1cm, 
+                text centered, draw=black, fill=green!30
+            },
+        process/.style = {
+                rectangle, text width=5cm,
+                % minimum width=3cm, 
+                %minimum height=1cm, 
+                text centered, draw=black, fill=orange!30
+            },
+        arrow/.style ={
+                thick,->,>=stealth
+            }]
+
+    %\node (start) [startstop] {Start};
+    %\node (input) [io, below of=start] {input};
+    \node (init) [process] { $\mathit{step}:=0$ };
+    \node (update_state) [process, below of=init] { ground $\mathit{updateState(step)}$};
+    \node (add_prop_won_constraint) [process, below of=update_state] { add constraint $:-\mathit{not}\;\mathit{proponentWon(step).}$ } ;
+    \node (solve_1) [decision, draw, align=left, below of=add_prop_won_constraint] { solve()... is SAT? };
+    \node (prop_won) [io, right of=solve_1, xshift=3cm] { return "YES" };
+    \node (remove_prop_won_constraint) [process, below of=solve_1] { remove constraint $:-\mathit{not}\;\mathit{proponentWon(step).}$ } ;
+    \node (add_game_on_constraint) [process, below of=remove_prop_won_constraint] { add constraint $:-\mathit{opponentWon(step).}$ } ;
+    \node (solve_2) [decision, draw, align=left, below of=add_game_on_constraint] { solve()... is SAT? };
+    \node (game_over) [io, below of=solve_2] { return "NO" };
+    \node (game_on) [process, left of=solve_2, xshift=-4cm] { remove constraint $:-\mathit{opponentWon(step).}$\\$\mathit{step} := \mathit{step} + 1$ } ;
+
+
+    % % arrows
+    \draw [arrow] (init) -- (update_state);
+    \draw [arrow] (update_state) -- (add_prop_won_constraint);
+    \draw [arrow] (add_prop_won_constraint) -- (solve_1);
+    \draw [arrow] (solve_1) -- node[anchor=south] {yes} (prop_won);
+    \draw [arrow] (solve_1) -- node[anchor=east] {no} (remove_prop_won_constraint);
+    \draw [arrow] (remove_prop_won_constraint) -- (add_game_on_constraint);
+    \draw [arrow] (add_game_on_constraint) -- (solve_2);
+    \draw [arrow] (solve_2) -- node[anchor=south] {yes} (game_on);
+    \draw [arrow] (game_on) |- (update_state);
+    \draw [arrow] (solve_2) -- node[anchor=east] {no} (game_over);
+
+\end{tikzpicture}
+\end{document}
