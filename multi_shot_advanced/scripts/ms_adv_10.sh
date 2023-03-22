@@ -7,7 +7,7 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-user=pigo271b@tu-dresden.de
 
-srun --exclusive --ntasks=1 /home/pigo271b/.conda/envs/flexASP/bin/python check_with_asp_alt_strat.py 10
+srun --exclusive --ntasks=1 /home/pigo271b/.conda/envs/flexASP/bin/python check_advanced.py 10
 
 echo "waiting for all jobs to complete"
 wait
