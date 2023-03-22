@@ -89,4 +89,5 @@ ob1Possible(t) :- possibleMove(t, "OB1", _), not pf1Possible(t), not pb2Possible
 | mean [s]     |        0.01 |       1.52 |      4.1  |          3.62 |          4.8  |
 | max [s]      |        0.07 |     152.78 |    585.44 |        595.95 |        599.47 |
 
+<!-- ![Cactus plot](./analysis/cactus_plot.png) -->
 ![Cactus plot](./analysis/cactus_plot.png)
