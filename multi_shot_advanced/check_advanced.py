@@ -24,12 +24,13 @@ TIMEOUT = 600
 if __name__ == '__main__':
 
     forget_strat = sys.argv[1]
+    output_path = OUTPUT_PATH.format(forget_strat)
 
     corr_results_df = pd.read_csv(ASPFORABA_RESULTS_PATH)
     
-    if os.path.isfile(OUTPUT_PATH):
+    if os.path.isfile(output_path):
         # check if a results file already exists
-        outputs_df = pd.read_csv(OUTPUT_PATH)
+        outputs_df = pd.read_csv(output_path)
     else:
         outputs_df = pd.DataFrame(columns=['instance', 'goal', 'result', 'duration', 'correct_result', 'verdict', 'steps_obtained'])
 
@@ -65,5 +66,5 @@ if __name__ == '__main__':
             })
 
             outputs_df = pd.concat([outputs_df, row_to_append], ignore_index=True)
-            outputs_df.to_csv(OUTPUT_PATH.format(forget_strat), index=False)
+            outputs_df.to_csv(output_path, index=False)
             bar()
