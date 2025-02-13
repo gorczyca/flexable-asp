@@ -13,12 +13,20 @@ import config as cfg
 import utilities as ut
 
 # OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/analysis/cactus_plot.pdf'
-OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/analysis/cactus_plot.png'
-
+# OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/analysis/cactus_plot.png'
+OUTPUT_PATH = '/home/piotr/Dresden/multishot/flexable-asp/analysis/cactus_plot.pdf'
 
 
 # DURATION_COLUMN = 'duration_sec'
 # INDEX_COLUMN = 'int_index'
+
+
+NON_TRIVIAL_INSTANCES_PATH = '/home/piotr/Dresden/multishot/flexable-asp/remove_trivial/instances_with_trivial.csv'
+
+
+FILTER_TRIVIAL = False
+FILTER_TIMEOUTS = True
+
 
 
 def plot_cactus_plot_reversed(solvers_dfs):
@@ -64,7 +72,20 @@ if __name__ == '__main__':
     # entire dataframe
 
 
-    solvers_dfs = {approach: ut.filter_timeouts(pd.read_csv(approach_obj.results_path)) for approach, approach_obj in cfg.APPROACHES.items()}
+    # solvers_dfs = {approach: ut.filter_timeouts(pd.read_csv(approach_obj.results_path)) for approach, approach_obj in cfg.APPROACHES.items()}
+
+    solvers_dfs = { approach: pd.read_csv(approach_obj.results_path) for approach, approach_obj in cfg.APPROACHES.items() }
+
+    if FILTER_TRIVIAL:
+        nt = pd.read_csv(NON_TRIVIAL_INSTANCES_PATH)
+        nt = nt['is_trivial'] == 'no'
+        for approach in solvers_dfs.keys():
+            solvers_dfs[approach] = solvers_dfs[approach][nt] 
+
+    if FILTER_TIMEOUTS:
+        for approach in solvers_dfs.keys():
+            solvers_dfs[approach] = ut.filter_timeouts(solvers_dfs[approach]) 
+
 
     plot_cactus_plot_reversed(solvers_dfs)
     

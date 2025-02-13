@@ -1,7 +1,4 @@
 #program base.
-% p :- not p.
-
-
 % move types
 moveType("PB1";"PB2";"PF1";"OB1";"OB2";"OF1";"PF2";"OF2").
 advancementMoveType("PB1";"PB2";"PF1";"OB1";"OB2";"PF2";"OF2"). % no OF1
@@ -11,6 +8,9 @@ ruleMoveType("PB1";"PB2";"PF1";"OB1";"OB2";"OF1").
 assMoveType("PF2";"OF2").
 % players
 player("P";"O").
+
+branchingMove("PB1";"PB2","PF2").
+nonBranchingMove("PF1";"OB1";"OB2";"OF1";"OF2").
 
 statement(S) :- assumption(S).
 statement(S) :- contrary(S, _).
@@ -294,6 +294,11 @@ taCondition(t) :- taCondition1(t), taCondition2(t).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+nonBranchingMovePossible(t) :- possibleMove(t, Type, _), nonBranchingMove(Type).
+onlyBranchingMovesPossible(t) :- not nonBranchingMovePossible(t).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % opp cannot move
 oppCanMoveTermination(t) :- possibleMove(t, "OB1", _).
 oppCanMoveTermination(t) :- possibleMove(t, "OB2", _).
@@ -321,6 +326,9 @@ propRuleHead(t, H) :- ruleHead(t, H, "P").
 pf1Possible(t) :- possibleMove(t, "PF1", _).
 pf1NotPossible(t) :- not pf1Possible(t).
 
+% propRule(t, RId) :- move(_, Type, RId), ruleMoveType(Type), proponentMove(Type).
+% propAss(t, A) :- defence(_, A).
+
 
 #program checkPropWon(t).
 #external hasPropWon(t).
@@ -332,16 +340,35 @@ pf1NotPossible(t) :- not pf1Possible(t).
 :- opponentWon(t), gameOn(t).
 
 
-
 #program step(t).
+% IF there are possible non-branching moves, perform them all
+move(t, Type, X) :- possibleMove(t-1, Type, X), nonBranchingMove(Type).
+% ELSE chooes a single branching move 
+{ move(t, Type, X) : possibleMove(t-1, Type, X),  advancementMoveType(Type), branchingMove(Type)  } = 1 :- onlyBranchingMovesPossible(t-1). 
+
+
+% #program addConstraints(t).
+% #external extractConstraints(t).
+% :- not opponentWon(t), extractConstraints(t).
+
+% #program checkBranching(t).
+% #external checkNonBranchingMoves(t).
+% :- not nonBranchingMovePossible(t), checkNonBranchingMoves(t).
+
+% perform all non-branching moves
+% #program stepNonBranching(t).
+
+% choose one branching move
+% #program stepBranching(t). %
+
+% #program step(t).
 % choose 1 move
 
-% encofce using PF1 moves whenever possible
 
-{ move(t, Type, X) : possibleMove(t-1, Type, X),  advancementMoveType(Type)  } = 1 :- pf1NotPossible(t-1).
-{ move(t, "PF1", X) : possibleMove(t-1, "PF1", X) } = 1 :- pf1Possible(t-1).
 
-% #show possibleMove/3.
+% { move(t, Type, X) : possibleMove(t-1, Type, X),  advancementMoveType(Type)  } = 1 :- pf1NotPossible(t-1).
+% { move(t, "PF1", X) : possibleMove(t-1, "PF1", X) } = 1 :- pf1Possible(t-1).
+
 
 % ------------- debugging errors
 % #show remainingRule/3.
@@ -353,6 +380,10 @@ pf1NotPossible(t) :- not pf1Possible(t).
 #show moveRuleHead/3.
 #show moveRuleBody/3.
 #show opponentWon/1.
-% #show move/3.
+#show possibleMove/3.
+#show move/3.
+
+% #show propAss/1.
+% #show propRule/1.
 
 

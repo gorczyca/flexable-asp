@@ -5,16 +5,12 @@ from itertools import groupby
 import clingo
 
 
-# ENCODING = '/home/piotr/Dresden/multishot/flexable-asp/multi_shot_alt_test/encodingMultiShotAltTest.lp'
-ENCODING = '/home/piotr/Dresden/multishot/flexable-asp/multi_shot_alt/encodingMultiShotAlt.lp'
+ENCODING = '/home/piotr/Dresden/multishot/flexable-asp/multi_shot_alt_test/encodingMultiShotAltTest.lp'
 
 
 class CustomControl(clingo.Control):
-    def __init__(self, 
-                 *asp_files,
-                 solve_timeout=60):
+    def __init__(self, *asp_files):
         super().__init__(['--warn=none'])
-        self.solve_timeout=solve_timeout
         for file in asp_files:
             super().load(file)
 
@@ -31,23 +27,6 @@ class CustomControl(clingo.Control):
     def add_base(self, code):
         super().add('base', [], code)
 
-    
-    # def is_safisfiable(self, program, external, step) -> bool:
-    #     self.ground(program, step)
-    #     self.assign_external(external, step)
-    #     start_time = time.time()
-    #     with self.solve(async_=True) as handle:
-    #         while not handle.wait(1.0):
-    #             time_elapsed = time.time() - start_time
-    #             if time_elapsed > self.__solve_timeout:
-    #                 handle.cancel()
-    #                 raise Exception(f'Timeout error')
-                
-    #         res = handle.get()
-    #         self.release_external(external, step)
-    #         self.cleanup()
-
-    #         return res.satisfiable
 
 def convert_to_move(step, symbols):
     move_type, move_info = None, None
@@ -95,7 +74,7 @@ def on_model(step, model):
 def get_flex_asp_answer(instance, goal, timeout):
     start_time = time.time()
     ctrl = CustomControl(instance, ENCODING)
-
+    
     ctrl.add_base(f'goal({goal}).')
     ctrl.ground('base')
 
@@ -103,11 +82,18 @@ def get_flex_asp_answer(instance, goal, timeout):
     return_value = None
     res = None
 
+
+    #https://potassco.org/clingo/python-api/5.4/
+    #on_model : Callback[[Model],Optional[bool]]=None
+    #Optional callback for intercepting models. A Model object is passed to the callback. The search can be interruped from the model callback by returning False
+
+
     while True:
         print(f'step {step}')
+        ctrl.ground('updateState', step)
         ctrl.ground('checkPropWon', step)
         ctrl.assign_external('hasPropWon', step)
-        with ctrl.solve(async_=True, on_model=lambda m: print("Answer: {}".format(m))) as handle:
+        with ctrl.solve(async_=True) as handle:
             while not handle.wait(1.0):
                 time_elapsed = time.time() - start_time
                 if time_elapsed > timeout:
@@ -136,6 +122,25 @@ def get_flex_asp_answer(instance, goal, timeout):
 
                     if res.satisfiable: # game is still on
                         ctrl.release_external('gameOn', step) # remove constraint
+                        ctrl.cleanup()
+
+
+                        ############# game on
+                        ctrl.ground('addConstraints', step)
+                        ctrl.assign_external('extractConstraints', step)
+
+                        models = []
+                        # this doesn't work as it should
+                        with ctrl.solve(yield_=True) as handle:
+                            for model in handle:
+                                model_symbols = model.symbols(shown=True)
+                                if (model_symbols):
+                                    models.append(model_symbols)
+                                    pass
+
+                        model_opp_won = list(filter(lambda x: any(y.name =='opponentWon' for y in x), models))
+
+                        ctrl.release_external('extractConstraints', step)
                         ctrl.cleanup()
 
                         step += 1

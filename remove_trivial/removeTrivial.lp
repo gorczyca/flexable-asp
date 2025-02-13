@@ -1,0 +1,1 @@
+trivial :- goal(S), not head(_, S), not assumption(S).
