@@ -48,6 +48,8 @@ def get_flex_asp_answer(instance, goal, logic_program_path):
             ctrl.add('constraints', [], ' '.join(constraints))
             ctrl.simple_ground('constraints')
 
+        # TODO: this doesnt work yet
+
         # if not ctrl.is_safisfiable('checkGameOn', 'gameOn', step):
         #     return_value='no'
         #     break
