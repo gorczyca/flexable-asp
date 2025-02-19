@@ -51,12 +51,20 @@ def get_flex_asp_answer(instance, goal, logic_program_path):
 
 
 if __name__ == '__main__':
-    _, instance, goal, logic_program_path  = sys.argv
+    # for debugging
 
-    # '/home/piotr/anaconda3/envs/flexable/bin/python /home/piotr/Dresden/multishot/flexable-asp/new/approaches/constraints/control.py /home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl w2'
+    try:      
+        _, instance, goal, logic_program_path  = sys.argv
+    except Exception as e:
+        instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl'
+        goal = 'q4'
+        logic_program_path = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/constraints/logicProgram.lp'
+        
+        print(f'\033[93mWarning, working on test instance, because no commandline parameters provided')
 
-    # instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl'
-
-    res, step = get_flex_asp_answer(instance, goal, logic_program_path)
-    print(f'{res} {step}')
+    finally: 
+        res, step = get_flex_asp_answer(instance, goal, logic_program_path)
+        print(f'{res} {step}')
     
+
+
