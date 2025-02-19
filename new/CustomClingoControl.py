@@ -72,3 +72,17 @@ class CustomClingoControl(clingo.Control):
             self.cleanup()
 
             return res.satisfiable
+        
+    def is_satisfiable_assumptions(self, assumptions) -> bool:
+        with self.solve(async_=True, assumptions=assumptions) as handle:
+            while not handle.wait(1.0):
+                pass
+                # time_elapsed = time.time() - start_time
+                # if time_elapsed > self.__solve_timeout:
+                    # handle.cancel()
+                    # raise Exception(f'Timeout error')
+                
+            res = handle.get()
+            return res.satisfiable
+
+    # def is_satisfiable

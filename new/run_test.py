@@ -10,7 +10,8 @@ from alive_progress import alive_bar
 
 SETTINGS = Settings()
 
-APPROACH = 'constraints' # TODO: temporary
+# APPROACH = 'constraints' # TODO: temporary
+APPROACH = 'constraints-assumptions' # TODO: temporary
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
