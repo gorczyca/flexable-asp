@@ -342,15 +342,14 @@ propAss(t, A) :- move(_, Type, A), assMoveType(Type), proponentMove(Type).
 
 
 % Set:
-%  hasPropWon(t) -> True to switch this on
-%  hasPropWon(t) -> False to switch this off
-:- hasPropWon(t), not proponentWon(t).
-% if this is satisfiable, return SAT, else check the following
+%  proponentWon(t) -> True 
+% to check if proponent can win, 
 
+%      otherise
+% 
 % Set:
-%  gameOn(t) -> True to switch this on
-%  gameOn(t) -> False to switch this off
-:- gameOn(t), opponentWon(t).
+%  opponentWon(t) -> False
+% to check if we can still continue
 
 
 #program step(t).

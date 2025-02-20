@@ -10,10 +10,13 @@
 
 class Settings:
     def __init__(self):
-        self.approaches = {
-            'constraints': 'approaches/constraints',
-            'constraints-assumptions': 'approaches/constraints-assumptions'
-        }
+        # self.approaches = {
+        #     'assumptions': 'approaches/assumptions',
+        #     'externals': 'approaches/externals'
+        # }
+        self.approaches_path = 'approaches'
+        # self.approach_script = 'run_approach.py',
+
         self.python_path = '/home/piotr/anaconda3/envs/flexable/bin/python'
         self.aspforaba_results_path = '/home/piotr/Dresden/multishot/flexable-asp/test/aspforaba_results.csv'
         self.output_path = 'results'

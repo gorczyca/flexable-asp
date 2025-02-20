@@ -31,8 +31,6 @@ class CustomClingoControl(clingo.Control):
 
         self.set_models(0)
 
-        # models = []
-
         constraints = []
 
         with self.solve(yield_=True) as hnd:
@@ -53,7 +51,25 @@ class CustomClingoControl(clingo.Control):
 
             return constraints
 
-    
+
+    def get_constraints_assumptions(self, step, predicates):
+
+        self.set_models(0)
+        constraints = []
+
+        with self.solve(yield_=True, assumptions=[(clingo.Function('opponentWon', [clingo.Number(step)]), True)]) as hnd:
+            for m in hnd:
+                relevant_atoms = filter(lambda model: model.name in predicates and model.arguments[0] == clingo.Number(step), m.symbols(shown=True))
+
+                constraints.append(':- ' + ', '.join(f'{atom.name}(_, {atom.arguments[1]})' for atom in relevant_atoms) + '.')
+                    
+            self.set_models(-1)
+
+            return constraints
+        
+
+
+
     def is_safisfiable(self, program, external, step) -> bool:
         self.simple_ground(program, step)
         self.assign_external(external, step) # don't use externals but use assumptions - there will be no re-grounding
