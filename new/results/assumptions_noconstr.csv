@@ -6333,3 +6333,5 @@ id,instance,goal,result,duration,correct_result,verdict,steps_obtained,constrain
 6332,exp_cycles_indvary3_step4_batch_yyy04.pl,x3,no,0.07,no,corr,0,None,None,None
 6333,exp_cycles_indvary3_step4_batch_yyy04.pl,d3,no,0.08,no,corr,0,None,None,None
 6334,exp_cycles_indvary3_step4_batch_yyy04.pl,a4,no,0.08,no,corr,0,None,None,None
+6335,exp_cycles_indvary3_step4_batch_yyy04.pl,c1,,600.0,no,TIMEOUT,,,,
+6336,exp_cycles_indvary3_step4_batch_yyy04.pl,r4,no,0.11,no,corr,0,None,None,None
