@@ -6321,3 +6321,11 @@ id,instance,goal,result,duration,correct_result,verdict,steps_obtained,constrain
 6320,exp_cycles_indvary3_step4_batch_yyy02.pl,y5,no,0.1,no,corr,0,None,None,None
 6321,exp_cycles_indvary3_step4_batch_yyy03.pl,t4,no,0.1,no,corr,0,None,None,None
 6322,exp_cycles_indvary3_step4_batch_yyy03.pl,z5,no,0.1,no,corr,0,None,None,None
+6323,exp_cycles_indvary3_step4_batch_yyy03.pl,x3,,600.0,no,TIMEOUT,,,,
+6324,exp_cycles_indvary3_step4_batch_yyy03.pl,a4,no,0.06,no,corr,0,None,None,None
+6325,exp_cycles_indvary3_step4_batch_yyy03.pl,v1,no,0.07,no,corr,0,None,None,None
+6326,exp_cycles_indvary3_step4_batch_yyy03.pl,x5,no,0.07,no,corr,0,None,None,None
+6327,exp_cycles_indvary3_step4_batch_yyy03.pl,r4,no,0.07,no,corr,0,None,None,None
+6328,exp_cycles_indvary3_step4_batch_yyy03.pl,r1,no,0.07,no,corr,0,None,None,None
+6329,exp_cycles_indvary3_step4_batch_yyy03.pl,a1,yes,0.08,yes,corr,1,None,None,None
+6330,exp_cycles_indvary3_step4_batch_yyy03.pl,f2,no,0.45,no,corr,9,None,None,None
