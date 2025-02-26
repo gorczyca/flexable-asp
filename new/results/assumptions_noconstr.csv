@@ -6329,3 +6329,7 @@ id,instance,goal,result,duration,correct_result,verdict,steps_obtained,constrain
 6328,exp_cycles_indvary3_step4_batch_yyy03.pl,r1,no,0.07,no,corr,0,None,None,None
 6329,exp_cycles_indvary3_step4_batch_yyy03.pl,a1,yes,0.08,yes,corr,1,None,None,None
 6330,exp_cycles_indvary3_step4_batch_yyy03.pl,f2,no,0.45,no,corr,9,None,None,None
+6331,exp_cycles_indvary3_step4_batch_yyy04.pl,c3,,600.0,no,TIMEOUT,,,,
+6332,exp_cycles_indvary3_step4_batch_yyy04.pl,x3,no,0.07,no,corr,0,None,None,None
+6333,exp_cycles_indvary3_step4_batch_yyy04.pl,d3,no,0.08,no,corr,0,None,None,None
+6334,exp_cycles_indvary3_step4_batch_yyy04.pl,a4,no,0.08,no,corr,0,None,None,None
