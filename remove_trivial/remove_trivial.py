@@ -13,7 +13,7 @@ OUTPUT_PATH = '/home/piotr/Dresden/multishot/flexable-asp/remove_trivial/instanc
 
 
 def get_is_trivial(instance_path, goal):
-    ctrl = CustomClingoControl(instance_path)
+    ctrl = CustomClingoControl(asp_files=[instance_path])
     ctrl.simple_ground('base')
 
 

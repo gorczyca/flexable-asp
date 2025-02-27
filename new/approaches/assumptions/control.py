@@ -9,7 +9,7 @@ from CustomClingoControl import CustomClingoControl
 
 def get_flex_asp_answer(instance, goal, use_constraints, logic_program_path):
     # start_time = time.time()
-    ctrl = CustomClingoControl(instance, logic_program_path)
+    ctrl = CustomClingoControl(asp_files=[instance, logic_program_path])
 
     ctrl.add_base(f'goal({goal}).')
     ctrl.simple_ground('base')

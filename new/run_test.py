@@ -3,6 +3,7 @@ import subprocess
 import time
 
 from config import Settings
+from CustomArgumentParser import CustomParser
 
 import pandas as pd
 from alive_progress import alive_bar
@@ -19,11 +20,12 @@ USE_CONSTRAINTS = True
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def get_flexasp_subprocess_answer(inst_path, goal, approach, use_constraints, timeout):
+def get_flexasp_subprocess_answer(inst_path, goal, args, timeout):
 
     approach_path = f'{SCRIPT_DIR}/{SETTINGS.approaches_path}'
 
-    command = f'{SETTINGS.python_path} {approach_path}/run_approach.py {inst_path} {goal} {use_constraints} {approach} {approach_path}/{approach}/logicProgram.lp'
+    # command = f'{SETTINGS.python_path} {approach_path}/run_approach.py {inst_path} {goal} {use_constraints} {approach} {approach_path}/{approach}/logicProgram.lp'
+    command = f'{SETTINGS.python_path} {approach_path}/run_approach.py -i {inst_path} -g {goal} -a {args.approach} {"-c" if args.constraints else ""} {"-s" if args.subprocess else ""} -x {args.max_moves} -l {approach_path}/{args.approach}/logicProgram.lp'
 
     start_time = time.time()
     try:
@@ -53,15 +55,19 @@ def get_flexasp_subprocess_answer(inst_path, goal, approach, use_constraints, ti
         return results_dict
 
 
-def main(approach, use_constraints):
+def main():
+
+    parser = CustomParser()
+    args = parser.parse_args()
     
     corr_results_df = pd.read_csv(SETTINGS.aspforaba_results_path)
 
     output_dir = f'{SCRIPT_DIR}/{SETTINGS.output_path}'
     os.makedirs(output_dir, exist_ok=True)
 
-    use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
-    output_path = f'{output_dir}/{approach}_{use_constraints_substr}.csv'
+    options_string = f'a={args.approach}_c={args.constraints}_x={args.max_moves}_s={args.subprocess}'
+    # use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
+    output_path = f'{output_dir}/{options_string}.csv'
     
     if os.path.isfile(output_path):
         # check if a results file already exists
@@ -73,7 +79,7 @@ def main(approach, use_constraints):
     total_size = len(corr_results_df)
     inc_count = 0
 
-    with alive_bar(total_size, dual_line=True, title=f'FlexASP: {approach}_{use_constraints_substr}') as bar:
+    with alive_bar(total_size, dual_line=True, title=f'FlexASP: {options_string}') as bar:
         for i, (index, row) in enumerate(corr_results_df.iterrows(), start=1):
 
             if ((outputs_df['instance'] == row.instance) & (outputs_df['goal'] == row.goal)).any():
@@ -83,7 +89,7 @@ def main(approach, use_constraints):
 
             inst_path = f'{SETTINGS.instances_path}/{row.instance}'
             # ms_result, ms_duration, ms_steps = get_flexasp_subprocess_answer(inst_path, row.goal, SETTINGS.timeout)
-            results_dict = get_flexasp_subprocess_answer(inst_path, row.goal, approach, use_constraints, SETTINGS.timeout)
+            results_dict = get_flexasp_subprocess_answer(inst_path, row.goal, args, SETTINGS.timeout)
 
             if results_dict['result'] is not None:
                 results_dict['verdict'] = 'corr' if results_dict['result'] == row.adm_result else 'inc'
@@ -111,20 +117,19 @@ def main(approach, use_constraints):
             bar()
 
 
-
-
-
 if __name__ == '__main__':
+    main()
+    # try:      
+    #     parser = CustomParser()
 
-    try:      
-        _, approach, use_constraints  = sys.argv
-        use_constraints = use_constraints == 'True'
-    except Exception as e:
-        # instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl'
-        approach, use_constraints = APPROACH, USE_CONSTRAINTS
-        print(f'\033[93m{"Warning, no commandline parameters provided."}\033[0m')
+    #     _, approach, use_constraints  = sys.argv
+    #     use_constraints = use_constraints == 'True'
+    # except Exception as e:
+    #     # instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl'
+    #     approach, use_constraints = APPROACH, USE_CONSTRAINTS
+    #     print(f'\033[93m{"Warning, no commandline parameters provided."}\033[0m')
 
-    finally: 
-        main(approach, use_constraints)
+    # finally: 
+    #     main(approach, use_constraints)
 
     

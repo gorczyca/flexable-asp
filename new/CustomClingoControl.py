@@ -2,8 +2,8 @@ import clingo
 
 
 class CustomClingoControl(clingo.Control):
-    def __init__(self, *asp_files):
-        super().__init__(['--warn=none'])
+    def __init__(self, asp_files, cmd_params=[]):
+        super().__init__(cmd_params+['--warn=none'])
         # self.__solve_timeout=solve_timeout
         for file in asp_files:
             super().load(file)
