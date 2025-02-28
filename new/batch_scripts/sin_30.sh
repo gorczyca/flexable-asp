@@ -3,13 +3,12 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=100:00:00
 #SBATCH --mem-per-cpu=65535
-#SBATCH --job-name=IAssN
+#SBATCH --job-name=IAssC
 #SBATCH --mail-type=end
 #SBATCH --mail-user=pigo271b@tu-dresden.de
 
-srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python run_test.py assumptions False
+srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python run_test.py -a singleshot -x 30
 
 echo "waiting for all jobs to complete"
 wait
 echo "all parallel tasks finished"
-

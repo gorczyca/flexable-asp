@@ -7,7 +7,7 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-user=pigo271b@tu-dresden.de
 
-srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python run_test.py assumptions True
+srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python run_test.py -a singleshot -x 5
 
 echo "waiting for all jobs to complete"
 wait
