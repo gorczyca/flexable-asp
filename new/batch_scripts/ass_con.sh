@@ -8,7 +8,7 @@
 #SBATCH --mail-user=pigo271b@tu-dresden.de
 
 
-srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python run_test.py -a assumptions -c
+srun --exclusive --ntasks=1 /data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python /data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/new/run_test.py -a assumptions -c
 
 echo "waiting for all jobs to complete"
 wait
