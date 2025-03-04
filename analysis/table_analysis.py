@@ -9,7 +9,7 @@ OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp
 NON_TRIVIAL_INSTANCES_PATH = '/home/piotr/Dresden/multishot/flexable-asp/remove_trivial/instances_with_trivial.csv'
 
 
-FILTER_TRIVIAL = False
+FILTER_TRIVIAL = True
 
 def get_data(df):
 
@@ -45,6 +45,7 @@ if __name__ == '__main__':
     df = pd.DataFrame(solvers_dfs)
     df.index = ['solved', 'timeouts', 'incorrect', 'time_tot [h]', 'time_95 [h]', 'min [s]', 'median [s]', 'mean [s]', 'max [s]' ]
     df.to_csv(OUTPUT_PATH)
+    print('Without' if FILTER_TRIVIAL else 'With', 'trivial instances')
     print(df.to_markdown())
     
     

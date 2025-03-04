@@ -24,7 +24,7 @@ OUTPUT_PATH = '/home/piotr/Dresden/multishot/flexable-asp/analysis/cactus_plot.p
 NON_TRIVIAL_INSTANCES_PATH = '/home/piotr/Dresden/multishot/flexable-asp/remove_trivial/instances_with_trivial.csv'
 
 
-FILTER_TRIVIAL = False
+FILTER_TRIVIAL = True
 FILTER_TIMEOUTS = True
 
 

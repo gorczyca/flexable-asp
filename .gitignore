@@ -8,3 +8,4 @@ __pycache__
 *.synctex.gz
 
 get-files.sh
+analysis/cactus_plot.pdf
