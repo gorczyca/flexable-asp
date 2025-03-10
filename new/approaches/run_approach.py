@@ -7,6 +7,8 @@ import externals.control as externals
 import assumptions.control as assumptions
 import singleshot.control as singleshot
 
+import aspforaba.control as aspforaba
+
 sys.path.append(str(Path(__file__).parents[1])) # to import CustomArgumentParser from anywhere
 from CustomArgumentParser import CustomParser
 
@@ -27,6 +29,8 @@ if __name__ == '__main__':
         results = singleshot.get_flex_asp_answer_subprocess(args.instance, args.goal, args.max_moves, args.logic_program_path)
     elif args.approach == 'singleshot' and not args.subprocess:
         results = singleshot.get_flex_asp_answer_clingo_control(args.instance, args.goal, args.max_moves, args.logic_program_path)
+    elif args.approach == 'aspforaba':
+        results = aspforaba.get_aspforaba_answer(args.instance, args.goal)
     
     # res is a tuple, unpack it
     print(" ".join(map(str, results)))
