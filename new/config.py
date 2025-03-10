@@ -25,11 +25,11 @@ class Settings:
             self.initial_outputs_paths = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/aspforaba_results.csv'
 
             if self.iccma_instances:
-                # easy instances
-                self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/asp_for_aba_instances'
-            else: 
                 # iccma instances
                 self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/iccma2023_instances'
+            else: 
+                # easy instances
+                self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/asp_for_aba_instances'
 
         else:
             ######## local
