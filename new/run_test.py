@@ -25,7 +25,7 @@ def get_flexasp_subprocess_answer(inst_path, goal, args, timeout):
     approach_path = f'{SCRIPT_DIR}/{SETTINGS.approaches_path}'
 
     # command = f'{SETTINGS.python_path} {approach_path}/run_approach.py {inst_path} {goal} {use_constraints} {approach} {approach_path}/{approach}/logicProgram.lp'
-    command = f'{SETTINGS.python_path} {approach_path}/run_approach.py -i {inst_path} -g {goal} -a {args.approach} {"-c" if args.constraints else ""} {"-s" if args.subprocess else ""} -x {args.max_moves} -l {approach_path}/{args.approach}/logicProgram.lp'
+    command = f'{SETTINGS.python_path} {approach_path}/run_approach.py -i {inst_path} -g {goal} -a {args.approach} {"-c" if args.constraints else ""} {"-o" if args.game_over_check else ""} {"-s" if args.subprocess else ""} -x {args.max_moves} -l {approach_path}/{args.approach}/logicProgram.lp'
 
     start_time = time.time()
     try:
@@ -65,7 +65,7 @@ def main():
     output_dir = f'{SCRIPT_DIR}/{SETTINGS.output_path}'
     os.makedirs(output_dir, exist_ok=True)
 
-    options_string = f'a={args.approach}_c={args.constraints}_x={args.max_moves}_s={args.subprocess}'
+    options_string = f'a={args.approach}_c={args.constraints}_x={args.max_moves}_o={args.game_over_check}_s={args.subprocess}{"_iccma" if SETTINGS.iccma_instances else ""}'
     # use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
     output_path = f'{output_dir}/{options_string}.csv'
     

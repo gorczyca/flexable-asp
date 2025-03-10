@@ -1,6 +1,8 @@
-step(0..maxMove). % # provide max move by 
-goal(argGoal).
 % clingo logicProgram.lp -c maxMove=100 -c argGoal=s
+
+step(1..maxMove). % # provide max move by 
+goal(argGoal).
+
 
 % #program base. <- remove the program directives
 
@@ -53,32 +55,25 @@ remainingRuleBlocked(0, RId, "P") :- body(RId, B1), body(RId,B2), contrary(B1,B2
 % TODO: here first explicitly rewrite everything monotonic from the previous steps
 % now the difference is, you have to write the steps into every predicate manually
 
-%
 
-continue(0).
-continue(T) :- step(T), possibleMove(T-1, _, _).
-% everywhere when a rule is of the form:
-%    x(T) :- y(T-1)
-%      we want to do it only if continue(T) is true.
-%
-stateRule(T, RId, P) :- stateRule(T-1, RId, P), continue(T).
-stateStatement(T, S, P) :- stateStatement(T-1, S, P), continue(T).
+stateRule(T, RId, P) :- stateRule(T-1, RId, P), step(T).
+stateStatement(T, S, P) :- stateStatement(T-1, S, P), step(T) .
 
-completeStateStatement(T, S, P) :- completeStateStatement(T-1, S, P), continue(T).
-completeStateRule(T, RId, P) :- completeStateRule(T-1, RId, P), continue(T).
+completeStateStatement(T, S, P) :- completeStateStatement(T-1, S, P), step(T).
+completeStateRule(T, RId, P) :- completeStateRule(T-1, RId, P), step(T).
 
-defence(T, D) :- defence(T-1, D), continue(T).
-defenceContrary(T, C) :- defenceContrary(T-1, C), continue(T).
-culprit(T, C) :- culprit(T-1, C), continue(T).
-culpritContrary(T, Ctr) :- culpritContrary(T-1, Ctr), continue(T).
+defence(T, D) :- defence(T-1, D), step(T).
+defenceContrary(T, C) :- defenceContrary(T-1, C), step(T).
+culprit(T, C) :- culprit(T-1, C), step(T).
+culpritContrary(T, Ctr) :- culpritContrary(T-1, Ctr), step(T).
 
-ruleHead(T, H, P) :- ruleHead(T-1, H, P), continue(T).
+ruleHead(T, H, P) :- ruleHead(T-1, H, P), step(T).
 
-stateFullyExpandedStatement(T, S, "O") :- stateFullyExpandedStatement(T-1, S, "O"), continue(T).
+stateFullyExpandedStatement(T, S, "O") :- stateFullyExpandedStatement(T-1, S, "O"), step(T).
 
-playedBlockedStatement(T, S, "O") :- playedBlockedStatement(T-1, S, "O"), continue(T).
-playedBlockedRule(T, RId, "O") :- playedBlockedRule(T-1, RId, "O"), continue(T).
-stateFullyExpandedStatementNotAssumption(T, S, "O") :- stateFullyExpandedStatementNotAssumption(T-1, S, "O"), continue(T).
+playedBlockedStatement(T, S, "O") :- playedBlockedStatement(T-1, S, "O"), step(T).
+playedBlockedRule(T, RId, "O") :- playedBlockedRule(T-1, RId, "O"), step(T).
+stateFullyExpandedStatementNotAssumption(T, S, "O") :- stateFullyExpandedStatementNotAssumption(T-1, S, "O"), step(T).
 
 
 move(T) :- move(T, _, _).
@@ -87,9 +82,9 @@ move(T) :- move(T, _, _).
 stateStatement(T, S, "O") :- stateStatement(T, S, "P"). % copy safely
 stateRule(T, RId, "O") :- stateRule(T, RId, "P").  % copy safely
 
-dependency(T, H, B, P) :- dependency(T-1, H, B, P), continue(T).
+dependency(T, H, B, P) :- dependency(T-1, H, B, P), step(T).
 
-remainingRuleBlocked(T, RId, P) :- remainingRuleBlocked(T-1, RId, P), continue(T-1).
+remainingRuleBlocked(T, RId, P) :- remainingRuleBlocked(T-1, RId, P), step(T-1).
 
 
 
@@ -110,7 +105,7 @@ completeStateRule(T, RId, P) :- stateRule(T, RId, P), not incompleteStateRule(T,
 completeStateStatement(T, S, P):-completeStateRule(T, RId, P), head(RId, S). % copy safely
 
 % incomplete statements (not necessarily in players sets)
-incompleteStatement(T, S, P) :- player(P), statement(S), not completeStateStatement(T, S, P), continue(T). 
+incompleteStatement(T, S, P) :- player(P), statement(S), not completeStateStatement(T, S, P), step(T). 
 
 % fight cycles
 % for the opponent, it is possible to have circular dependencies and still win - they just need to create another complete argument without these dependencies. This solution filters out such cases. But at least it should be correct
@@ -134,7 +129,7 @@ culpritContrary(T, Ctr) :- culprit(T, C), contrary(C, Ctr). % copy safely
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Remaining opponent rules
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-remainingRule(T, RId, "O") :- not stateRule(T, RId, "O"), head(RId, _), continue(T).
+remainingRule(T, RId, "O") :- not stateRule(T, RId, "O"), head(RId, _), step(T).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,8 +137,8 @@ remainingRule(T, RId, "O") :- not stateRule(T, RId, "O"), head(RId, _), continue
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auxiliary rule heads at state T
 ruleHead(T, H, P) :- stateRule(T, RId1, P), head(RId1, H), player(P). % copy safely
-remainingRule(T, RId1, "P") :- not ruleHead(T, H, "P"), head(RId1, H), continue(T).
-remainingRule(T, RId1, "P") :- not stateStatement(T, H, "P"), head(RId1, H), continue(T).
+remainingRule(T, RId1, "P") :- not ruleHead(T, H, "P"), head(RId1, H), step(T).
+remainingRule(T, RId1, "P") :- not stateStatement(T, H, "P"), head(RId1, H), step(T).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -314,17 +309,17 @@ incompleteCulpritContrary(T, Ctr) :- culpritContrary(T, Ctr), incompleteStateSta
 taCondition1Violated1(T) :- incompleteGoal(T, _).
 taCondition1Violated2(T) :- incompleteCulpritContrary(T, _).
 
-taCondition1(T) :- not taCondition1Violated1(T), not taCondition1Violated2(T), continue(T).
+taCondition1(T) :- not taCondition1Violated1(T), not taCondition1Violated2(T), step(T).
 
 taCondition2Violated(T) :- defenceContrary(T, C), unblockedCompleteStatement(T, C, "O").
 
-taCondition2(T) :- not taCondition2Violated(T), continue(T).
+taCondition2(T) :- not taCondition2Violated(T), step(T).
 taCondition(T) :- taCondition1(T), taCondition2(T).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-nonBranchingMovePossible(T) :- possibleMove(T, Type, _), nonBranchingMove(Type), continue(T).
-onlyBranchingMovesPossible(T) :- not nonBranchingMovePossible(T), continue(T).
+nonBranchingMovePossible(T) :- possibleMove(T, Type, _), nonBranchingMove(Type), step(T).
+onlyBranchingMovesPossible(T) :- not nonBranchingMovePossible(T), step(T).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -338,8 +333,8 @@ propCanMoveTermination(T) :- possibleMove(T, "PB1", _).
 propCanMoveTermination(T) :- possibleMove(T, "PB2", _).
 propCanMoveTermination(T) :- possibleMove(T, "PF2", _).
 
-proponentWon(T) :- taCondition(T), not oppCanMoveTermination(T), continue(T).
-opponentWon(T) :- not taCondition(T), not propCanMoveTermination(T), continue(T).
+proponentWon(T) :- taCondition(T), not oppCanMoveTermination(T), step(T).
+opponentWon(T) :- not taCondition(T), not propCanMoveTermination(T), step(T).
 
 
 % just for easier presentation
@@ -353,36 +348,10 @@ remainingPropRule(T, H) :- remainingRule(T, RId, "P"), head(RId, H).
 propRuleHead(T, H) :- ruleHead(T, H, "P").
 
 pf1Possible(T) :- possibleMove(T, "PF1", _).
-pf1NotPossible(T) :- not pf1Possible(T), continue(T).
+pf1NotPossible(T) :- not pf1Possible(T), step(T).
 
 
-% continue(T) :- step(T), possibleMove(T-1).
-
-
-% #program step(T).
 % IF there are possible non-branching moves, perform them all
-move(T, Type, X) :- possibleMove(T-1, Type, X), nonBranchingMove(Type), continue(T). % continue here should not be that important, but should not harm
+move(T, Type, X) :- possibleMove(T-1, Type, X), nonBranchingMove(Type), step(T). % continue here should not be that important, but should not harm
 % ELSE chooes a single branching move 
-{ move(T, Type, X) : possibleMove(T-1, Type, X),  advancementMoveType(Type), branchingMove(Type)  } = 1 :- onlyBranchingMovesPossible(T-1), continue(T).
-
-
-% if proponent won, we require to pass that information all the way up
-
-proponentWon(T) :- step(T), proponentWon(T-1).
-
-% check if proponent won
-:- not proponentWon(maxMove).
-
-
-
-% #show move/3.
-% #show step/1.
-% #show continue/1.
-% #show proponentWon/1.
-% #show opponentWon/1.
-
-
-% #show propAss/2.
-% #show propRule/2.
-
-
+{ move(T, Type, X) : possibleMove(T-1, Type, X),  advancementMoveType(Type), branchingMove(Type)  } = 1 :- onlyBranchingMovesPossible(T-1), step(T).

@@ -6,6 +6,7 @@ from pathlib import Path
 import externals.control as externals
 import assumptions.control as assumptions
 import singleshot.control as singleshot
+import naive_singleshot.control as naive_singleshot
 
 import aspforaba.control as aspforaba
 
@@ -22,13 +23,15 @@ if __name__ == '__main__':
     # use_constraints = use_constraints == 'True'
 
     if args.approach == 'assumptions':
-        results = assumptions.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.logic_program_path)
+        results = assumptions.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.max_moves, args.game_over_check, args.logic_program_path)
     elif args.approach == 'externals':
-        results = externals.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.logic_program_path)
+        results = externals.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.max_moves, args.game_over_check, args.logic_program_path)
     elif args.approach == 'singleshot' and args.subprocess:
-        results = singleshot.get_flex_asp_answer_subprocess(args.instance, args.goal, args.max_moves, args.logic_program_path)
+        results = singleshot.get_flex_asp_answer_subprocess(args.instance, args.goal, args.max_moves, args.game_over_check, args.logic_program_path)
     elif args.approach == 'singleshot' and not args.subprocess:
-        results = singleshot.get_flex_asp_answer_clingo_control(args.instance, args.goal, args.max_moves, args.logic_program_path)
+        results = singleshot.get_flex_asp_answer_clingo_control(args.instance, args.goal, args.max_moves, args.game_over_check, args.logic_program_path)
+    elif args.approach == 'naive_singleshot':
+        results = naive_singleshot.get_flex_asp_answer_clingo_control(args.instance, args.goal, args.max_moves, args.game_over_check, args.logic_program_path)
     elif args.approach == 'aspforaba':
         results = aspforaba.get_aspforaba_answer(args.instance, args.goal)
     
