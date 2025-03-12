@@ -27,10 +27,15 @@ if __name__ == '__main__':
         # instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy05.pl'
         # goal = 'c3'
         # goal = 'w2'
-        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/iccma2023_instances/aba_500_0.1_5_5_2.aba'
-        goal = 's278'
+        # instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/iccma2023_instances/aba_500_0.1_5_5_2.aba'
+        # goal = 's278'
 
         # print(f'\033[93m{"Warning, working on test instance, because no commandline parameters provided"}\033[0m')
+
+        # PROBLEMATIC
+        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/problematic_instance.aba'
+        # goal = 's3055'
+        goal = 'trivial'
 
     finally: 
         res = get_aspforaba_answer(instance, goal)

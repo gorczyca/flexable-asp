@@ -60,12 +60,20 @@ if __name__ == '__main__':
         'instance': '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy01.pl',
         'goal': 'u3' 
     }
+    problematic = {
+        'instance': '/home/piotr/Dresden/multishot/flexable-asp/test_instances/problematic_instance.aba',
+        'goal': 'trivial' 
+    }
+    
 
     # this instance is unsatisfiable
 
-    chosen_instance = instance_4
-    max_move = 30
-    game_over_check = True
+
+    chosen_instance = problematic
+    # max_move = 30
+    max_move = 2
+    # game_over_check = True
+    game_over_check = False
 
     logic_program_path = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/singleshot/logicProgram.lp'
 

@@ -74,10 +74,16 @@ if __name__ == '__main__':
         instance = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/aba-experiments-new/instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy05.pl'
         goal = 'u3'
         logic_program_path = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/assumptions/logicProgram.lp'
-        use_constraints = True
+        use_constraints = False
 
-        max_move = 5
+        max_move = 2
         game_over_check = False
+
+
+        # PROBLEMATIC
+        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/problematic_instance.aba'
+        # goal = 's3055'
+        goal = 'trivial'
 
         print(f'\033[93m{"Warning, working on test instance, because no commandline parameters provided"}\033[0m')
 
