@@ -14,7 +14,8 @@ def get_aspforaba_answer(instance, goal):
     # print('im here')
     s = ABASolver(from_file=instance)
     result = s.decide_credulous('AD', goal)
-    return ('yes',) if result else ('no',)
+    res =  'yes' if result else 'no'
+    return res, None, None, None, None
 
 
 if __name__ == '__main__':
