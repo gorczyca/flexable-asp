@@ -4,7 +4,7 @@ from alive_progress import alive_bar
 
 
 
-TRIVIAL_COUNT = 10
+TRIVIAL_COUNT = 0
 NON_TRIVIAL_MAX_STEP = 5
 NON_TRIVIAL_COUNT = 10
 
@@ -30,6 +30,10 @@ def merge_files_contents(file1_path, file2_path, separator=f'%%%%%%%%%%%%%%%%%%%
         hard = f2.read()
 
         easy = replace_ambiguous(easy)
+
+        # replace duplicates in body
+        easy = easy.replace('head(', 'head(xxx').replace('body(', 'body(xxx')
+        
 
         return '\n'.join([easy,separator,hard])
 
