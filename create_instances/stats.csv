@@ -1,4 +1,4 @@
-instance,goal,easy_instance,hard_instance,correct_result,is_trivial,steps_needed
+instance,goal,easy_instance,hard_instance,adm_result,is_trivial,steps_needed
 exp_acyclic_depvary_step2_batch_yyy10.pl+aba_5000_0.3_10_10_0.aba,r2,exp_acyclic_depvary_step2_batch_yyy10.pl,aba_5000_0.3_10_10_0.aba,yes,no,1.0
 exp_acyclic_indvary3_step6_batch_yyy01.pl+aba_5000_0.3_10_10_0.aba,e2,exp_acyclic_indvary3_step6_batch_yyy01.pl,aba_5000_0.3_10_10_0.aba,yes,no,1.0
 exp_acyclic_depvary_step7_batch_yyy03.pl+aba_5000_0.3_10_10_0.aba,p1,exp_acyclic_depvary_step7_batch_yyy03.pl,aba_5000_0.3_10_10_0.aba,yes,no,1.0

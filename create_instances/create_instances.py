@@ -59,7 +59,7 @@ def run():
 
     hard_df = pd.read_csv(ASPFORABA_HARD_INSTANCES)
 
-    outputs_df = pd.DataFrame(columns=['instance', 'goal', 'easy_instance', 'hard_instance', 'correct_result', 'is_trivial', 'steps_needed'])
+    outputs_df = pd.DataFrame(columns=['instance', 'goal', 'easy_instance', 'hard_instance', 'adm_result', 'is_trivial', 'steps_needed'])
 
     total_size = len(hard_df) * len(concat_df)
 
@@ -79,7 +79,7 @@ def run():
                     'goal': [replace_ambiguous(easy_row.goal)],
                     'easy_instance': [easy_row.instance],
                     'hard_instance': [hard_row.instance],
-                    'correct_result': [easy_row.correct_result],
+                    'adm_result': [easy_row.correct_result],
                     'is_trivial': [easy_row.is_trivial],
                     'steps_needed': [easy_row.steps_obtained],
                 })
