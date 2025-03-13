@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib
+import math
 
 matplotlib.use('TkAgg')
 
@@ -36,7 +37,8 @@ def plot_cactus_plot_reversed(solvers_dfs):
         df, id_col, val_col = ut.sort(solver_df)
 
         # connect with line
-        ax = df.plot(y=id_col, x=val_col, color=cfg.COLORS[i], marker='o', ax=ax, label=solver)
+        # ax = df.plot(y=id_col, x=val_col, color=cfg.COLORS[math.floor(i/2)], marker='o', ax=ax, label=solver,  linestyle='--' if solver.endswith('-check') else '-')
+        ax = df.plot(y=id_col, x=val_col, color=cfg.COLORS[math.floor(i)], marker='o', ax=ax, label=solver,  linestyle='--' if solver.endswith('-check') else '-')
         # ax = df.plot(y=id_col, x=val_col, color=cfg.COLORS[i], marker=cfg.MARKERS[i], ax=ax, label=solver)
         # just a scatter plot
         #MARKERS = group_df.plot(kind='scatter', y=INDEX_COLUMN, x=DURATION_COLUMN, color=ct.COLORS_DICT[solver], marker=ct.MARKERS_DICT[solver], ax=ax, label=solver)

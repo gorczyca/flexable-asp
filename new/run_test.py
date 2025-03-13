@@ -60,12 +60,12 @@ def main():
     parser = CustomParser()
     args = parser.parse_args()
     
-    corr_results_df = pd.read_csv(SETTINGS.aspforaba_results_path)
+    corr_results_df = pd.read_csv(SETTINGS.correct_results_path)
 
     output_dir = f'{SCRIPT_DIR}/{SETTINGS.output_path}'
     os.makedirs(output_dir, exist_ok=True)
 
-    options_string = f'a={args.approach}_c={args.constraints}_x={args.max_moves}_o={args.game_over_check}_s={args.subprocess}{"_iccma" if SETTINGS.iccma_instances else ""}'
+    options_string = f'{SETTINGS.instances}_a={args.approach}_c={args.constraints}_x={args.max_moves}_o={args.game_over_check}_s={args.subprocess}'
     # use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
     output_path = f'{output_dir}/{options_string}.csv'
     

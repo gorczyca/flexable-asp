@@ -5,7 +5,7 @@ import utilities as ut
 
 
 OUTPUT_PATH = '/home/piotr/test/newest_ubuntu_data/Dresden/flexABle/flexable_asp/repo/analysis/comparison.csv'
-OUTPUT_PATH_TABLE = '/home/piotr/Dresden/multishot/flexable-asp/analysis/table.md'
+OUTPUT_PATH_TABLE = '/home/piotr/Dresden/multishot/flexable-asp/analysis/table.tex'
 
 NON_TRIVIAL_INSTANCES_PATH = '/home/piotr/Dresden/multishot/flexable-asp/remove_trivial/instances_with_trivial.csv'
 
@@ -51,6 +51,6 @@ if __name__ == '__main__':
     df.to_csv(OUTPUT_PATH)
     print('Without' if FILTER_TRIVIAL else 'With', 'trivial instances')
     print(df.to_markdown())
-    df.to_markdown(OUTPUT_PATH_TABLE)
+    df.to_latex(OUTPUT_PATH_TABLE)
     
     

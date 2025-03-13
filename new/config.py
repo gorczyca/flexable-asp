@@ -14,39 +14,55 @@ class Settings:
         self.hpc = True
         # self.hpc = False
         # self.iccma_instances = True
-        self.iccma_instances = False
+        # self.instances = 'iccma' # 'easy' 'problematic'
+        # self.instances = 'iccma' # 'easy' 'problematic'
+        self.instances = 'problematic' # 'easy' 'problematic'
 
         if self.hpc:
         ### HPC
             self.clingo_path = '/data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/clingo'
             self.python_path = '/data/horse/ws/pigo271b-flexasp-workspace/.conda/envs/flexable/bin/python'
-            self.aspforaba_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test/aspforaba_results.csv'
+            # self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test/aspforaba_results.csv'
 
             self.initial_instance_goal_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/iccma2023.csv'
             self.initial_outputs_paths = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/aspforaba_results.csv'
 
-            if self.iccma_instances:
+            if self.instances == 'iccma':
                 # iccma instances
+                # TODO
+                self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test/aspforaba_results.csv'
                 self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/iccma2023_instances'
-            else: 
+            elif self.instances == 'easy': 
                 # easy instances
+                # TODO
+                self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test/aspforaba_results.csv'
                 self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/test_instances/asp_for_aba_instances'
+            elif self.instances == 'problematic':
+                self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_instances/stats.csv'
+                self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_instances/instances'
+                
 
         else:
             ######## local
             self.clingo_path = '/home/piotr/anaconda3/envs/flexable/bin/clingo'
             self.python_path = '/home/piotr/anaconda3/envs/flexable/bin/python'
-            self.aspforaba_results_path = '/home/piotr/Dresden/multishot/flexable-asp/test/aspforaba_results.csv'
 
             self.initial_instance_goal_path = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/iccma2023.csv'
             self.initial_outputs_paths = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/aspforaba_results.csv'
 
-            if self.iccma_instances:
+            if self.instances == 'iccma':
                 # iccma instances
+                # TODO 
+                self.correct_results_path = '/home/piotr/Dresden/multishot/flexable-asp/test/aspforaba_results.csv'
                 self.instances_path = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/iccma2023_instances'
-            else:
+            elif self.instances == 'easy': 
                 # easy instances
+                # TODO 
+               self.correct_results_path = '/home/piotr/Dresden/multishot/flexable-asp/test/aspforaba_results.csv'                
                self.instances_path = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances'
-
+            elif self.instances == 'problematic':
+                self.correct_results_path = '/home/piotr/Dresden/multishot/flexable-asp/create_instances/stats.csv'
+                self.instances_path = '/home/piotr/Dresden/multishot/flexable-asp/create_instances/instances'
+                
 
 
