@@ -16,11 +16,11 @@ INSTANCES_PATH = '/home/piotr/Dresden/multishot/flexable-asp/test/asp_for_aba_in
 OUTPUT_INSTANCES = '/home/piotr/Dresden/multishot/flexable-asp/create_big_instances/instances'
 OUTPUT_CSV = '/home/piotr/Dresden/multishot/flexable-asp/create_big_instances/inst_goal.csv'
 
-MERGE_N_FRAMEWORKS = 25
+MERGE_N_FRAMEWORKS = 100
 
 CHOOSE_NO_GOAL_STATEMENTS = 10
 
-DISTRIBUTION_MEAN_MAX = 3
+DISTRIBUTION_MEAN_MAX = 1
 BATCHES_NO = 10
 # DISTRIBUTION_STD_DEV = 1
 
