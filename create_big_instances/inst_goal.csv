@@ -1,4 +1,4 @@
-id,instance,goal,correct_result
+id,instance,goal,correct_result,adm_result
 1,instance_n=10_m=0_b=0.lp,fr9_r1,
 2,instance_n=10_m=0_b=0.lp,fr3_p3,
 3,instance_n=10_m=0_b=0.lp,fr9_z3,
