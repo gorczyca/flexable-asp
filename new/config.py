@@ -16,7 +16,8 @@ class Settings:
         # self.iccma_instances = True
         # self.instances = 'iccma' # 'easy' 'problematic'
         # self.instances = 'iccma' # 'easy' 'problematic'
-        self.instances = 'problematic' # 'easy' 'problematic'
+        # self.instances = 'problematic' # 'easy' 'problematic' 'loosely_connected'
+        self.instances = 'loosely_connected' # 'easy' 'problematic' 'loosely_connected'
 
         if self.hpc:
         ### HPC
@@ -40,6 +41,9 @@ class Settings:
             elif self.instances == 'problematic':
                 self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_instances/stats.csv'
                 self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_instances/instances'
+            elif self.instances == 'loosely_connected':
+                self.correct_results_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_big_instances/inst_goal.csv'
+                self.instances_path = '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/create_big_instances/instances'
                 
 
         else:
@@ -63,6 +67,10 @@ class Settings:
             elif self.instances == 'problematic':
                 self.correct_results_path = '/home/piotr/Dresden/multishot/flexable-asp/create_instances/stats.csv'
                 self.instances_path = '/home/piotr/Dresden/multishot/flexable-asp/create_instances/instances'
+                
+            elif self.instances == 'loosely_connected':
+                self.correct_results_path = '/home/piotr/Dresden/multishot/flexable-asp/create_big_instances/inst_goal.csv'
+                self.instances_path = '/home/piotr/Dresden/multishot/flexable-asp/create_big_instances/instances'
                 
 
 
