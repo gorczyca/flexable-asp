@@ -1,0 +1,5 @@
+id,instance,goal,result,duration,correct_result,verdict,steps_obtained,constraints_no,constraints_max,constraints_min
+1,instance_n=10_m=0_b=0.lp,fr3_z1,yes,0.14,,inc,None,None,None,None
+2,instance_n=10_m=0_b=0.lp,fr5_y1,no,0.15,,inc,None,None,None,None
+3,instance_n=10_m=0_b=0.lp,fr4_q1,no,0.15,,inc,None,None,None,None
+4,instance_n=10_m=0_b=0.lp,fr4_r1,no,0.14,,inc,None,None,None,None

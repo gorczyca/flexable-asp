@@ -35,6 +35,8 @@ head_pattern = re.compile(r"head\((\d+),(\w+)\)\.")
 def load_framework_string_and_statements(instance_path, fr_id):
     statements = set()
     assumptions = set()
+
+    rule_ids = set()
     
     with open(instance_path, 'r') as file:
         # framework_string = file.read()
@@ -98,11 +100,15 @@ def load_framework_string_and_statements(instance_path, fr_id):
 
 
             if rule_id:
-                framework_string = framework_string.replace(f'head({rule_id}', f'head(r_fr{fr_id}_{rule_id}').replace(f'body({rule_id}', f'body(r_fr{fr_id}_{rule_id}')
+                new_rule_id = f'r_fr{fr_id}_{rule_id}'
+                framework_string = framework_string.replace(f'head({rule_id}', f'head({new_rule_id}').replace(f'body({rule_id}', f'body({new_rule_id}')
+                rule_ids.add(new_rule_id)
 
         
         # framework_string.replace('head')
-        return framework_string, statements, assumptions
+        # change rules to IDs again
+
+        return framework_string, statements, assumptions, rule_ids
         # pass
     
 
@@ -113,10 +119,27 @@ def get_framework_statements(framework_string):
 
 
 def create_framework_string(frameworks_dict, distribution_mean, batch_no):
-    output = f'% distribution mean={distribution_mean}\n\n'
+
+    # all_rule_ids = set()
+    # for i in frameworks_dict:
+        # all_rule_ids = all_rule_ids.union(frameworks_dict[i]['framework_rule_ids'])
+    
+
+    # rule_id_map = { rule_id: i for (i, rule_id) in enumerate(all_rule_ids, start=1) }
+
+
+
+    output = '' # otherwise ASPFORABA complains 
+    # output = f'% distribution mean={distribution_mean}\n\n'
     for i in frameworks_dict:
-        output += f'% {frameworks_dict[i]["instance"]}\n'
-        output += f'{frameworks_dict[i]["framework_string"]}\n'
+        # output += f'% {frameworks_dict[i]["instance"]}\n'
+        
+        fram_string = frameworks_dict[i]["framework_string"]
+
+        # for rule_id, int_i in rule_id_map.items():
+            # fram_string = fram_string.replace(rule_id, str(int_i))
+
+        output += fram_string + '\n'
     
     return output, f'instance_n={MERGE_N_FRAMEWORKS}_m={distribution_mean}_b={batch_no}.lp'
 
@@ -138,10 +161,11 @@ def main(distribution_mean, batch_no):
         instance_path = f'{INSTANCES_PATH}/{instance}'
         
         # 
-        framework_string, statements, assumptions = load_framework_string_and_statements(instance_path, i)
+        framework_string, statements, assumptions, rule_ids = load_framework_string_and_statements(instance_path, i)
         frameworks_dict[i]['framework_string'] = framework_string
         frameworks_dict[i]['framework_statements'] = statements
         frameworks_dict[i]['framework_assumptions'] = assumptions
+        frameworks_dict[i]['framework_rule_ids'] = rule_ids
 
 
     pairs = list(combinations(frameworks_dict, 2))
@@ -219,7 +243,7 @@ def main(distribution_mean, batch_no):
         outs.append({
             'instance': framework_name,
             'goal': g,
-            'correct_result': None
+            'adm_result': None
         })
     
     return pd.DataFrame(outs)
@@ -231,7 +255,7 @@ if __name__ == '__main__':
     if not os.path.exists(OUTPUT_INSTANCES):
         os.makedirs(OUTPUT_INSTANCES)
 
-    outputs_df = pd.DataFrame(columns=['instance', 'goal',  'correct_result'])
+    outputs_df = pd.DataFrame(columns=['instance', 'goal',  'adm_result'])
 
     for mean in range(DISTRIBUTION_MEAN_MAX):
         for i in range(BATCHES_NO):
