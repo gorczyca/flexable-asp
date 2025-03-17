@@ -11,8 +11,8 @@ class Settings:
         self.output_path = 'results'
         self.timeout = 600
 
-        self.hpc = True
-        # self.hpc = False
+        # self.hpc = True
+        self.hpc = False
         # self.iccma_instances = True
         # self.instances = 'iccma' # 'easy' 'problematic'
         # self.instances = 'iccma' # 'easy' 'problematic'

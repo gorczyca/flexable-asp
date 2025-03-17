@@ -81,15 +81,24 @@ def load_framework_string_and_statements(instance_path, fr_id):
             added_statements = added_statements - added_assumptions
 
 
+            if added_statements.intersection(added_assumptions):
+                pass
+
+
             for st in added_statements.union(added_assumptions):
                 new_st = f'fr{fr_id}_{st}'
                 # added_statements.remove(st)
                 # added_statements.add(new_st)
 
-                if st in added_statements:
-                    statements.add(new_st)
-                else:
+                if new_st in assumptions or st in added_assumptions:
                     assumptions.add(new_st)
+                else:
+                    statements.add(new_st)
+
+
+                if statements.intersection(assumptions):
+                    pass
+
 
                 framework_string = framework_string.replace(f'({st}',f'({new_st}').replace(f',{st}',f',{new_st}')
                 # print(framework_string.split('\n')[0])
@@ -108,7 +117,11 @@ def load_framework_string_and_statements(instance_path, fr_id):
         # framework_string.replace('head')
         # change rules to IDs again
 
-        return framework_string, statements, assumptions, rule_ids
+
+        if statements.intersection(assumptions):
+            pass
+
+        return framework_string, statements-assumptions, assumptions, rule_ids
         # pass
     
 
@@ -235,6 +248,13 @@ def main(distribution_mean, batch_no):
         all_framework_statements = all_framework_statements.union(frameworks_dict[i]['framework_assumptions']) 
 
     selected_goals = random.sample(list(all_framework_statements), CHOOSE_NO_GOAL_STATEMENTS)
+
+    ## debug
+    for g in selected_goals:
+        if g not in framework_string:
+            pass
+    ## 
+
 
     # instance,goal,correct_result
 
