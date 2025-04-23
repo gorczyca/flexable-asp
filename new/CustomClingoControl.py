@@ -100,5 +100,12 @@ class CustomClingoControl(clingo.Control):
                 
             res = handle.get()
             return res.satisfiable
+        
+    def enumerate_answer_sets(self):
+        with self.solve(yield_=True) as handle:
+            for i,m in enumerate(handle): 
+                print(f"Answer {i}: {m.symbols(shown=True)}")
+                #  handle.get()
+
 
     # def is_satisfiable

@@ -1,0 +1,7 @@
+id,instance,goal,result,duration
+1,WS_500_16_70_50.af,135,,300.0
+2,afinput_exp_cycles_indvary1_step1_batch_yyy07.af,236,False,4.88
+3,crusti_g2io_225_0.2_127_31.af,10777,,300.0
+4,Medium-result_b22.af,1014,True,30.5
+5,BA_160_70_1.af,92,True,0.33
+6,afinput_exp_acyclic_indvary2_step1_batch_yyy04.af,112,False,0.98

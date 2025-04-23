@@ -1,0 +1,20 @@
+clingo version 5.6.2
+Reading from ..._acyclic_depvary_step10_batch_yyy01.pl ...
+Reading      : 0.106
+Preprocessing: 0.001
+Solving...
+----------------------------------------------------------------------------|
+ID:T       Vars           Constraints         State            Limits       |
+       #free/#fixed   #problem/#learnt  #conflicts/ratio #conflict/#learnt  |
+----------------------------------------------------------------------------|
+ 0:R|     26/17     |      41/0       |         0/0.000 |    2000/2000000   |
+ 0:E|      0/17     |      41/0       |         0/0.000 |    2000/2000000   |
+Answer: 1
+supported(t3) supported(y1) supported(t4) supported(w5) supported(p2) supported(u2) supported(w2) supported(t5) supported(r2) supported(y4) supported(x5) supported(p3) supported(s3) supported(f1) supported(a2) supported(c2) supported(b5) supported(u4) supported(z1) supported(s1) supported(v4)
+----------------------------------------------------------------------------|
+SATISFIABLE
+
+Models       : 1+
+Calls        : 1
+Time         : 0.107s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.107s

@@ -1,0 +1,12 @@
+#program base.
+end(0,o) :- g(G), ctr(G,G). % inconsistent goal
+m(0,p,G) :- g(G). % initiate the dispute
+#program updateState(t).
+cul(t,C) :- m(_,p,P), ctr(C,P). % culprits
+pm(t,p,P) :- m(_,o,O), ctr(O,P), not cul(_,P),      not m(_,p,P), not ctr(P,P),                   not ctr(D1,P) : m(_,p,D1). % possible prop. move
+pm(t,o,O) :- m(_,p,P), ctr(P,O), not cul(_,O),      not m(_,o,O). % possible opp. move
+end(t,p) :- not pm(t,o,_), cul(_,O1) : m(_,o,O1). % prop. won
+end(t,o) :- not pm(t,p,_), m(_,o,O),                not ctr(O,P1) : m(_,p,P1). % opp. won
+#program step(t).
+m(t,o,A) :- pm(t-1,o,A), not pm(t-1,p,_). 
+{ m(t,p,A) : pm(t-1,p,A) } = 1 :- not pm(t-1,o,_).

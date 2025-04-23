@@ -31,7 +31,6 @@ head_pattern = re.compile(r"head\((\d+),(\w+)\)\.")
 
 
 
-
 def load_framework_string_and_statements(instance_path, fr_id):
     statements = set()
     assumptions = set()

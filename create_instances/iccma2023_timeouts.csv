@@ -1,8 +1,8 @@
-id,instance,goal,result,duration,verdict
-20,aba_5000_0.3_10_10_0.aba,s3055,,600.0,TIMEOUT
-51,aba_5000_0.3_5_5_8.aba,s3456,,600.0,TIMEOUT
-52,aba_2000_0.3_5_5_9.aba,s1266,,600.0,TIMEOUT
-64,aba_5000_0.3_10_10_5.aba,s4437,,600.0,TIMEOUT
+id,instance,goal,result,duration,verdict,all_yes_timeouts
+20,aba_5000_0.3_10_10_0.aba,s3055,,600.0,TIMEOUT,yes
+51,aba_5000_0.3_5_5_8.aba,s3456,,600.0,TIMEOUT,yes
+52,aba_2000_0.3_5_5_9.aba,s1266,,600.0,TIMEOUT,no
+64,aba_5000_0.3_10_10_5.aba,s4437,,600.0,TIMEOUT,
 73,aba_5000_0.3_10_10_6.aba,s746,,600.0,TIMEOUT
 80,aba_5000_0.3_5_5_3.aba,s1482,,600.0,TIMEOUT
 86,aba_5000_0.3_5_5_1.aba,s1538,,600.0,TIMEOUT
