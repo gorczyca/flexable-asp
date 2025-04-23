@@ -1,6 +1,11 @@
 import sys
 from clingo import Control, Number, Function, String
 
+def on_model(model):
+    print("Answer:")
+    for atom in model.symbols(shown=True):
+        print(f"  {atom}")
+
 
 def main(instance, goal, encoding):
   ctl = Control()
@@ -21,8 +26,12 @@ if __name__ == '__main__':
         # goal = '1'
         # goal = '2'
         # encoding = '/home/piotr/Dresden/multishot/flexable-asp/new/paper-tests/aspartix/adm.dl'
-        instance = '/home/piotr/Dresden/iccma2023_results/iccma2023_benchmarks/benchmarks/asp-syntax/WS_500_16_70_50.af' 
-        goal = '135' 
+        instance = '/home/piotr/Dresden/multishot/flexable-asp/new/af-test-instances/instances/Medium-result_b22.af'
+        goal = '1014'
+        # encoding = '/home/piotr/Dresden/multishot/flexable-asp/new/paper-tests/test-af/encoding.lp'
+
+        # instance = '/home/piotr/Dresden/iccma2023_results/iccma2023_benchmarks/benchmarks/asp-syntax/WS_500_16_70_50.af' 
+        # goal = '135' 
         encoding = '/home/piotr/Dresden/multishot/flexable-asp/new/paper-tests/aspartix/adm.dl'
     finally: 
         res = main(instance, goal, encoding)

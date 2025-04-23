@@ -18,3 +18,5 @@ not_defended(X) :- att(Y,X), not defeated(Y).
 
 %% All arguments x \in S need to be defended by S
 :- in(X), not_defended(X).
+
+%#show in/1.
