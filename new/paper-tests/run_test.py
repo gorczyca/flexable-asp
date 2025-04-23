@@ -31,7 +31,7 @@ INSTANCES_CONFIG = {
     },
     'af': {
         'problem_instances': '/home/piotr/Dresden/multishot/flexable-asp/new/af-test-instances/instances' 
-            if not HPC else '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/af-test-instances/instances',
+            if not HPC else '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/new/af-test-instances/instances',
         'problem_instances_goals': '/home/piotr/Dresden/multishot/flexable-asp/new/af-test-instances/instance-goal.csv' 
             if not HPC else '/data/horse/ws/pigo271b-flexasp-workspace/flexable-asp/new/af-test-instances/instance-goal.csv',
     }
