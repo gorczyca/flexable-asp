@@ -9,3 +9,5 @@ __pycache__
 
 get-files.sh
 analysis/cactus_plot.pdf
+new/af-test-instances/instances/
+

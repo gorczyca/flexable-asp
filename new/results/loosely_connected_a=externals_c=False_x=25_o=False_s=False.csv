@@ -1,0 +1,5 @@
+id,instance,goal,result,duration,correct_result,verdict,steps_obtained,constraints_no,constraints_max,constraints_min
+1,instance_n=500_m=0_b=0.lp,fr377_r2,,600.0,,TIMEOUT,,,,
+2,instance_n=500_m=0_b=0.lp,fr196_q3,,600.0,,TIMEOUT,,,,
+3,instance_n=500_m=0_b=0.lp,fr142_t3,,600.0,,TIMEOUT,,,,
+4,instance_n=500_m=0_b=0.lp,fr265_v1,,600.0,,TIMEOUT,,,,
