@@ -11,8 +11,8 @@ from alive_progress import alive_bar
 
 SETTINGS = Settings()
 
-# APPROACH = 'assumptions' # TODO: temporary
-APPROACH = 'externals' # TODO: temporary
+APPROACH = 'assumptions' # TODO: temporary
+# APPROACH = 'externals' # TODO: temporary
 
 # USE_CONSTRAINTS = False
 USE_CONSTRAINTS = True
@@ -31,8 +31,8 @@ def get_flexasp_subprocess_answer(inst_path, goal, args, timeout):
     try:
         output = subprocess.check_output(args=[command], shell=True, stderr=subprocess.STDOUT, timeout=timeout)
         time_needed = time.time() - start_time
-        split = output.decode().split('\n')
-        results_split = split[0].split()
+        results_split = output.decode().strip().split()
+        # results_split = split[0].split()
         results_dict = {
             'result': results_split[0],
             'steps': results_split[1],
@@ -67,7 +67,7 @@ def main():
 
     options_string = f'{SETTINGS.instances}_a={args.approach}_c={args.constraints}_x={args.max_moves}_o={args.game_over_check}_s={args.subprocess}'
     # use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
-    output_path = f'{output_dir}/{options_string}.csv'
+    output_path = f'{output_dir}/new---{options_string}.csv'
     
     if os.path.isfile(output_path):
         # check if a results file already exists

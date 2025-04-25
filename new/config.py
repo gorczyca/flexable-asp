@@ -11,13 +11,14 @@ class Settings:
         self.output_path = 'results'
         self.timeout = 600
 
-        self.hpc = True
         # self.hpc = False
+        self.hpc = False
         # self.iccma_instances = True
+        self.instances = 'easy'
         # self.instances = 'iccma' # 'easy' 'problematic'
         # self.instances = 'iccma' # 'easy' 'problematic'
         # self.instances = 'problematic' # 'easy' 'problematic' 'loosely_connected'
-        self.instances = 'loosely_connected' # 'easy' 'problematic' 'loosely_connected'
+        # self.instances = 'loosely_connected' # 'easy' 'problematic' 'loosely_connected'
 
         if self.hpc:
         ### HPC

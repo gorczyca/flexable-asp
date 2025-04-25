@@ -23,7 +23,9 @@ if __name__ == '__main__':
     # use_constraints = use_constraints == 'True'
 
     if args.approach == 'assumptions':
-        results = assumptions.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.max_moves, args.game_over_check, args.logic_program_path)
+        # print('am here')
+        results = assumptions.main(args.instance, args.goal, args.logic_program_path)
+        # print(results)
     elif args.approach == 'externals':
         results = externals.get_flex_asp_answer(args.instance, args.goal, args.constraints, args.max_moves, args.game_over_check, args.logic_program_path)
     elif args.approach == 'singleshot' and args.subprocess:

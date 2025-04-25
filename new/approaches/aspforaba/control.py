@@ -34,10 +34,12 @@ if __name__ == '__main__':
         # print(f'\033[93m{"Warning, working on test instance, because no commandline parameters provided"}\033[0m')
 
         # PROBLEMATIC
-        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/problematic_instance.aba'
+        # instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/problematic_instance.aba'
         # goal = 's3055'
-        goal = 'trivial'
-
+        # goal = 'trivial'
+        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy07.pl'
+        goal = 'u2' 
+        # encoding = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/assumptions/logicProgram.lp'
     finally: 
         res = get_aspforaba_answer(instance, goal)
         print(res)
