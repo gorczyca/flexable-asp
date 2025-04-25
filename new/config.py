@@ -12,7 +12,7 @@ class Settings:
         self.timeout = 600
 
         # self.hpc = False
-        self.hpc = False
+        self.hpc = True
         # self.iccma_instances = True
         self.instances = 'easy'
         # self.instances = 'iccma' # 'easy' 'problematic'
