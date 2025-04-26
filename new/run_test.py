@@ -68,6 +68,7 @@ def main():
     options_string = f'{SETTINGS.instances}_a={args.approach}_c={args.constraints}_x={args.max_moves}_o={args.game_over_check}_s={args.subprocess}'
     # use_constraints_substr  = 'constr' if use_constraints else 'noconstr'
     output_path = f'{output_dir}/new---{options_string}.csv'
+    print(output_path)
     
     if os.path.isfile(output_path):
         # check if a results file already exists
@@ -76,6 +77,7 @@ def main():
         # otherwise create a DataFrame 
         outputs_df = pd.DataFrame(columns=['id', 'instance', 'goal', 'result', 'duration', 'correct_result', 'verdict', 'steps_obtained', 'constraints_no', 'constraints_max', 'constraints_min'])
 
+    print(output_path)
     total_size = len(corr_results_df)
     inc_count = 0
 
@@ -96,6 +98,7 @@ def main():
             else:
                 results_dict['verdict'] = 'TIMEOUT'
 
+            print(results_dict)
 
             row_to_append = pd.DataFrame({
                 'id': [int(i)],
