@@ -41,10 +41,8 @@ if __name__ == '__main__':
     except Exception as e:
         # instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy07.pl'
         # goal = 'u2' 
-        instance = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/assumptions/test1.lp'
-        # instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances/exp_acyclic_depvary_step10_batch_yyy03.pl'
-        # goal = 'f3'
-        goal = 'a1'
+        instance = '/home/piotr/Dresden/multishot/flexable-asp/test_instances/asp_for_aba_instances/exp_acyclic_depvary_step2_batch_yyy01.pl'
+        goal = 'b2'
         encoding = '/home/piotr/Dresden/multishot/flexable-asp/new/approaches/assumptions/logicProgram.lp'
     finally: 
         res, step, _, _, _ = main(instance, goal, encoding)
